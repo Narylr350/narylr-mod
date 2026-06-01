@@ -5,7 +5,7 @@ import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.narylr.narylrmod.item.ModBlocks.registerModBlocks;
+import static com.narylr.narylrmod.block.ModBlocks.registerModBlocks;
 import static com.narylr.narylrmod.item.ModItemGroup.registerItemGroups;
 import static com.narylr.narylrmod.item.ModItems.registerModItems;
 

@@ -1,4 +1,4 @@
-package com.narylr.narylrmod.item;
+package com.narylr.narylrmod.block;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -23,8 +23,8 @@ public class ModBlocks {
     public static final Block STEEL_FURNACE = Registry.register(
             BuiltInRegistries.BLOCK,
             ResourceLocation.fromNamespaceAndPath(MOD_ID, "steel_furnace"),
-            new Block(BlockBehaviour.Properties.of()
-                    .strength(6.0F, 8.0F)
+            new SteelFurnaceBlock(BlockBehaviour.Properties.of()
+                    .strength(6.0F, 10.0F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)
             )
