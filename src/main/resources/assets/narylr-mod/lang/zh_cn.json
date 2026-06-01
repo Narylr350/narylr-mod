@@ -1,0 +1,14 @@
+{
+  "itemGroup.narylr-mod.steel_craft": "钢锭工艺",
+
+  "item.narylr-mod.steel_ingot": "钢锭",
+  "item.narylr-mod.steel_nugget": "钢粒",
+  "item.narylr-mod.raw_steel": "生钢坯",
+
+
+  "block.narylr-mod.steel_block": "钢块",
+  "block.narylr-mod.steel_furnace": "钢熔炉",
+
+  "advancements.narylr-mod.steel_age.title": "钢铁时代",
+  "advancements.narylr-mod.steel_age.description": "第一次获得钢锭"
+}

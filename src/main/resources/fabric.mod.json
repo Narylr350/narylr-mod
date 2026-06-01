@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "narylr-mod",
+	"version": "${version}",
+	"name": "Steel Craft",
+	"description": "钢锭工艺",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/narylr-mod/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.narylr.narylrmod.NarylrMod"
+		],
+		"client": [
+			"com.narylr.narylrmod.client.NarylrModClient"
+		]
+	},
+	"mixins": [
+		"narylr-mod.mixins.json",
+		{
+			"config": "narylr-mod.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.2",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}

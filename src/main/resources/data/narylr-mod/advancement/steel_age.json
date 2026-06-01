@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "id": "narylr-mod:steel_ingot"
+    },
+    "title": {
+      "translate": "advancements.narylr-mod.steel_age.title"
+    },
+    "description": {
+      "translate": "advancements.narylr-mod.steel_age.description"
+    },
+    "frame": "task",
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_steel_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "narylr-mod:steel_ingot"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_steel_ingot"
+    ]
+  ]
+}
