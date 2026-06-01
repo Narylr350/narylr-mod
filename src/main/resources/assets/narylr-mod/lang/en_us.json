@@ -1,0 +1,15 @@
+{
+  "itemGroup.narylr-mod.steel_craft": "Steel Craft",
+
+  "item.narylr-mod.steel_ingot": "Steel Ingot",
+  "item.narylr-mod.steel_nugget": "Steel Nugget",
+  "item.narylr-mod.raw_steel": "Raw Steel Billet",
+
+  "block.narylr-mod.steel_block": "Steel Block",
+  "block.narylr-mod.steel_furnace": "Steel Furnace",
+
+  "container.narylr-mod.steel_furnace": "Steel Furnace",
+
+  "advancements.narylr-mod.steel_age.title": "Steel Age",
+  "advancements.narylr-mod.steel_age.description": "Obtain your first steel ingot"
+}

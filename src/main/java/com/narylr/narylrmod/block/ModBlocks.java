@@ -31,6 +31,6 @@ public class ModBlocks {
     );
 
     public static void registerModBlocks() {
-        LOGGER.info("方块注册成功");
+        LOGGER.info("注册方块");
     }
 }

@@ -1,13 +1,13 @@
 package com.narylr.narylrmod;
 
+import com.narylr.narylrmod.block.ModBlocks;
+import com.narylr.narylrmod.item.ModItemGroup;
+import com.narylr.narylrmod.item.ModItems;
+import com.narylr.narylrmod.screen.ModMenus;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.narylr.narylrmod.block.ModBlocks.registerModBlocks;
-import static com.narylr.narylrmod.item.ModItemGroup.registerItemGroups;
-import static com.narylr.narylrmod.item.ModItems.registerModItems;
 
 public class NarylrMod implements ModInitializer {
 	public static final String MOD_ID = "narylr-mod";
@@ -24,8 +24,9 @@ public class NarylrMod implements ModInitializer {
 		// Proceed with mild caution.
 
 		LOGGER.info("Narylr Mod loading");
-		registerModItems();
-		registerModBlocks();
-		registerItemGroups();
+		ModItems.registerModItems();
+		ModBlocks.registerModBlocks();
+		ModMenus.registerMenus();
+		ModItemGroup.registerItemGroups();
 	}
 }

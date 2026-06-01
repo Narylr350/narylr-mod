@@ -1,5 +1,6 @@
 package com.narylr.narylrmod.item;
 
+import com.narylr.narylrmod.NarylrMod;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -10,13 +11,10 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Supplier;
 
-import static com.narylr.narylrmod.NarylrMod.LOGGER;
-import static com.narylr.narylrmod.NarylrMod.MOD_ID;
-
 public class ModItemGroup {
     public static final CreativeModeTab STEEL_EXPANSION_GROUP = Registry.register(
             BuiltInRegistries.CREATIVE_MODE_TAB,
-            ResourceLocation.fromNamespaceAndPath(MOD_ID, "steel_craft"),
+            ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_craft"),
             FabricItemGroup.builder()
                     .icon(new Supplier<ItemStack>() {
                         @Override
@@ -39,6 +37,6 @@ public class ModItemGroup {
     );
 
     public static void registerItemGroups() {
-        LOGGER.info("钢锭工艺创造模式Tab栏注册成功");
+        NarylrMod.LOGGER.info("注册创造模式Tab栏");
     }
 }
