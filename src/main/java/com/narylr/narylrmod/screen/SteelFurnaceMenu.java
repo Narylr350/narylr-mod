@@ -32,21 +32,21 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
         super(ModMenus.STEEL_FURNACE_MENU, containerId);
         this.container = container;
 
-        this.addSlot(new Slot(container, 0, 56, 17){
+        this.addSlot(new Slot(container, 0, 56, 17) {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
                 //允许输入槽输入铁锭,生钢坯
                 return itemStack.is(Items.IRON_INGOT) || itemStack.is(ModItems.RAW_STEEL);
             }
         });   // 输入槽
-        this.addSlot(new Slot(container, 1, 56, 53){
+        this.addSlot(new Slot(container, 1, 56, 53) {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
                 //允许输入煤炭
                 return itemStack.is(Items.COAL);
             }
         });   // 煤炭槽
-        this.addSlot(new Slot(container, 2, 116, 35){
+        this.addSlot(new Slot(container, 2, 116, 35) {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
                 return false;
@@ -85,7 +85,56 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
 
     @Override
     public @NotNull ItemStack quickMoveStack(Player player, int index) {
-        return ItemStack.EMPTY;
+        ItemStack originalStack = ItemStack.EMPTY;
+        Slot slot = this.slots.get(index);
+
+        if (slot.hasItem()) {
+            ItemStack stackInSlot = slot.getItem();
+            originalStack = stackInSlot.copy();
+
+            //机器槽 0 1 2 其余为玩家背包
+            //机器到玩家背包
+            if (index < 3) {
+                if (!this.moveItemStackTo(stackInSlot, 3, 39, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else {
+                //铁锭,生钢坯到输入槽
+                if (stackInSlot.is(Items.IRON_INGOT) || stackInSlot.is(ModItems.RAW_STEEL)) {
+                    if (!this.moveItemStackTo(stackInSlot, 0, 1, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                    //煤炭到煤炭槽
+                } else if (stackInSlot.is(Items.COAL)) {
+                    if (!this.moveItemStackTo(stackInSlot, 1, 2, true)) {
+                        return ItemStack.EMPTY;
+                    }
+                    //玩家背包到快捷栏
+                }else if (index < 30){
+                    if (!this.moveItemStackTo(stackInSlot,30,39,false)){
+                        return ItemStack.EMPTY;
+                    }
+                    //快捷栏到玩家背包
+                }else if (index<39){
+                    if (!this.moveItemStackTo(stackInSlot,3,30,false)){
+                        return ItemStack.EMPTY;
+                    }
+                }
+            }
+
+            if (stackInSlot.isEmpty()) {
+                slot.set(ItemStack.EMPTY);
+            } else {
+                slot.setChanged();
+            }
+
+            if (stackInSlot.getCount() == originalStack.getCount()) {
+                return ItemStack.EMPTY;
+            }
+
+            slot.onTake(player, stackInSlot);
+        }
+        return originalStack;
     }
 
     @Override
