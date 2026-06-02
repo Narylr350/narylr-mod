@@ -11,12 +11,7 @@ public class ModMenus {
     public static final MenuType<SteelFurnaceMenu> STEEL_FURNACE_MENU = Registry.register(
             BuiltInRegistries.MENU,
             ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_furnace"),
-            new MenuType<>(new MenuType.MenuSupplier<SteelFurnaceMenu>() {
-                @Override
-                public SteelFurnaceMenu create(int i, Inventory inventory) {
-                    return new SteelFurnaceMenu(i, inventory);
-                }
-            }, null)
+            new MenuType<>(SteelFurnaceMenu::new, null)
     );
 
     public static void registerMenus() {

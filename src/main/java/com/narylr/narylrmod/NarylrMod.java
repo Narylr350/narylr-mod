@@ -1,6 +1,7 @@
 package com.narylr.narylrmod;
 
 import com.narylr.narylrmod.block.ModBlocks;
+import com.narylr.narylrmod.block.entity.ModBlockEntities;
 import com.narylr.narylrmod.item.ModItemGroup;
 import com.narylr.narylrmod.item.ModItems;
 import com.narylr.narylrmod.screen.ModMenus;
@@ -26,6 +27,7 @@ public class NarylrMod implements ModInitializer {
 		LOGGER.info("Narylr Mod loading");
 		ModItems.registerModItems();
 		ModBlocks.registerModBlocks();
+		ModBlockEntities.registerBlockEntities();
 		ModMenus.registerMenus();
 		ModItemGroup.registerItemGroups();
 	}
