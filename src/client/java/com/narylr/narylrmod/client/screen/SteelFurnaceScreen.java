@@ -4,9 +4,12 @@ import com.narylr.narylrmod.screen.SteelFurnaceMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class SteelFurnaceScreen extends AbstractContainerScreen<SteelFurnaceMenu> {
+    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/gui/container/furnace.png");
+
     public SteelFurnaceScreen(SteelFurnaceMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
         this.imageWidth = 176;
@@ -29,8 +32,7 @@ public class SteelFurnaceScreen extends AbstractContainerScreen<SteelFurnaceMenu
         int x = this.leftPos;
         int y = this.topPos;
 
-        guiGraphics.fill(x, y, x + this.imageWidth, y + this.imageHeight, 0xFF8B8B8B);
-        guiGraphics.fill(x + 4, y + 4, x + this.imageWidth - 4, y + this.imageHeight - 4, 0xFFC6C6C6);
+        guiGraphics.blit(TEXTURE, x, y, 0, 0, this.imageWidth, this.imageHeight);
     }
 
     @Override

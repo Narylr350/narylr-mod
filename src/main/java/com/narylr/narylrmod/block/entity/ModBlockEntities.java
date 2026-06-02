@@ -2,7 +2,6 @@ package com.narylr.narylrmod.block.entity;
 
 import com.narylr.narylrmod.NarylrMod;
 import com.narylr.narylrmod.block.ModBlocks;
-import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -11,8 +10,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 public class ModBlockEntities {
     public static final BlockEntityType<SteelFurnaceBlockEntity> STEEL_FURNACE_BLOCK_ENTITY = Registry.register(
             BuiltInRegistries.BLOCK_ENTITY_TYPE,
-            ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID,"steel_furnace"),
-            BlockEntityType.Builder.of(SteelFurnaceBlockEntity::new,ModBlocks.STEEL_FURNACE).build()
+            ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_furnace"),
+            BlockEntityType.Builder.of(SteelFurnaceBlockEntity::new, ModBlocks.STEEL_FURNACE).build()
     );
 
     public static void registerBlockEntities() {

@@ -66,14 +66,18 @@ public class SteelFurnaceBlock extends BaseEntityBlock {
             Player player,
             BlockHitResult hitResult
     ) {
-        if (!level.isClientSide()){
-            player.sendSystemMessage(Component.literal( "右键了钢熔炉方块实体"));
-            player.openMenu(new SimpleMenuProvider(new MenuConstructor() {
-                @Override
-                public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-                    return new SteelFurnaceMenu(containerId, playerInventory);
-                }
-            },Component.translatable("container.narylr-mod.steel_furnace")));
+        if (!level.isClientSide()) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+
+            if (blockEntity instanceof SteelFurnaceBlockEntity steelFurnaceBlockEntity) {
+                player.sendSystemMessage(Component.literal("右键了钢熔炉方块实体"));
+                player.openMenu(new SimpleMenuProvider(new MenuConstructor() {
+                    @Override
+                    public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
+                        return new SteelFurnaceMenu(containerId, playerInventory, steelFurnaceBlockEntity);
+                    }
+                }, Component.translatable("container.narylr-mod.steel_furnace")));
+            }
         }
         return InteractionResult.SUCCESS;
     }
