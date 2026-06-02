@@ -1,13 +1,16 @@
 package com.narylr.narylrmod.screen;
 
 import com.narylr.narylrmod.block.entity.SteelFurnaceBlockEntity;
+import com.narylr.narylrmod.item.ModItems;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 
 public class SteelFurnaceMenu extends AbstractContainerMenu {
@@ -29,9 +32,26 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
         super(ModMenus.STEEL_FURNACE_MENU, containerId);
         this.container = container;
 
-        this.addSlot(new Slot(container, 0, 56, 17));   // 输入槽
-        this.addSlot(new Slot(container, 1, 56, 53));   // 煤炭槽
-        this.addSlot(new Slot(container, 2, 116, 35));  // 输出槽
+        this.addSlot(new Slot(container, 0, 56, 17){
+            @Override
+            public boolean mayPlace(ItemStack itemStack) {
+                //允许输入槽输入铁锭,生钢坯
+                return itemStack.is(Items.IRON_INGOT) || itemStack.is(ModItems.RAW_STEEL);
+            }
+        });   // 输入槽
+        this.addSlot(new Slot(container, 1, 56, 53){
+            @Override
+            public boolean mayPlace(ItemStack itemStack) {
+                //允许输入煤炭
+                return itemStack.is(Items.COAL);
+            }
+        });   // 煤炭槽
+        this.addSlot(new Slot(container, 2, 116, 35){
+            @Override
+            public boolean mayPlace(ItemStack itemStack) {
+                return false;
+            }
+        });  // 输出槽
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
