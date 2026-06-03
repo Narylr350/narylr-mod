@@ -1,7 +1,6 @@
 package com.narylr.narylrmod.block.entity;
 
 import com.narylr.narylrmod.block.SteelFurnaceBlock;
-import com.narylr.narylrmod.item.ModItems;
 import com.narylr.narylrmod.recipe.ModRecipes;
 import com.narylr.narylrmod.recipe.SteelFurnaceRecipe;
 import com.narylr.narylrmod.recipe.SteelFurnaceRecipeInput;
@@ -15,15 +14,29 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Optional;
 
 public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
+    //当前已经烧了多久
+    private int progress = 0;
+    //总共要烧多久
+    private int maxProgress = 0;
+    //当前燃烧时间
+    private int burnTime = 0;
+    //总共燃烧时间
+    private int maxBurnTime = 0;
+
+    private SteelFurnaceRecipe currentSteelRecipe;
+    private RecipeHolder<SmeltingRecipe> currentSmeltingRecipe;
     //临时存储在内存中
     private final SimpleContainer inventory = new SimpleContainer(3);
     //钢熔炉中的物品创建List集合存储
@@ -35,6 +48,8 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
             return switch (index) {
                 case 0 -> progress;
                 case 1 -> maxProgress;
+                case 2 -> burnTime;
+                case 3 -> maxBurnTime;
                 default -> 0;
             };
         }
@@ -44,20 +59,16 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
             switch (index) {
                 case 0 -> progress = value;
                 case 1 -> maxProgress = value;
+                case 2 -> burnTime = value;
+                case 3 -> maxBurnTime = value;
             }
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 4;
         }
     };
-
-    private SteelFurnaceRecipe currentRecipe;
-    //当前已经烧了多久
-    private int progress = 0;
-    //总共要烧多久
-    private int maxProgress = 0;
 
     public SteelFurnaceBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.STEEL_FURNACE_BLOCK_ENTITY, pos, blockState);
@@ -72,95 +83,82 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
         return data;
     }
 
-    public static void serverTick(
-            Level level,
-            BlockPos pos,
-            BlockState state,
-            SteelFurnaceBlockEntity blockEntity
-    ) {
+    public static void serverTick(Level level, BlockPos pos, BlockState state, SteelFurnaceBlockEntity blockEntity) {
         if (level.isClientSide) {
             return;
         }
 
-        boolean working = blockEntity.hasRecipe();
+        boolean working = false;
+
+        if (blockEntity.hasSteelRecipe()) {
+            working = true;
+            blockEntity.processSteelRecipe();
+        } else if (blockEntity.hasSmeltingRecipe()) {
+            working = blockEntity.processSmeltingRecipe();
+        } else {
+            blockEntity.resetProgress();
+        }
 
         if (state.getValue(SteelFurnaceBlock.LIT) != working) {
             level.setBlock(pos, state.setValue(SteelFurnaceBlock.LIT, working), 3);
         }
 
-        if (working) {
-            blockEntity.progress++;
-
-            if (blockEntity.progress >= blockEntity.maxProgress) {
-                blockEntity.craftItem();
-                blockEntity.progress = 0;
-            }
-
-            setChanged(level, pos, state);
-        } else {
-            if (blockEntity.progress != 0) {
-                blockEntity.progress = 0;
-                setChanged(level, pos, state);
-            }
-        }
+        setChanged(level, pos, state);
     }
 
-    private boolean hasRecipe() {
+    private boolean hasSteelRecipe() {
         if (level == null) {
             maxProgress = 0;
-            currentRecipe = null;
+            currentSteelRecipe = null;
             return false;
         }
 
         SteelFurnaceRecipeInput recipeInput = new SteelFurnaceRecipeInput(items.get(0), items.get(1));
 
-        Optional<RecipeHolder<SteelFurnaceRecipe>> recipeHolder = level
-                .getRecipeManager()
-                .getRecipeFor(ModRecipes.STEEL_FURNACING_TYPE, recipeInput, level);
+        Optional<RecipeHolder<SteelFurnaceRecipe>> recipeHolder =
+                level.getRecipeManager().getRecipeFor(ModRecipes.STEEL_FURNACING_TYPE, recipeInput, level);
 
         if (recipeHolder.isEmpty()) {
-            maxProgress = 0;
-            currentRecipe = null;
+            currentSteelRecipe = null;
             return false;
         }
 
         SteelFurnaceRecipe recipe = recipeHolder.get().value();
-        ItemStack result = recipe.result();
 
-        if (!canOutput(result)) {
-            maxProgress = 0;
-            currentRecipe = null;
+        if (!canOutput(recipe.result())) {
+            currentSteelRecipe = null;
             return false;
         }
 
+        currentSteelRecipe = recipe;
         maxProgress = recipe.cookingTime();
-        currentRecipe = recipe;
         return true;
     }
 
-    private boolean canOutput(ItemStack result) {
-        ItemStack output = items.get(2);
+    private void processSteelRecipe() {
+        burnTime = 0;
+        maxBurnTime = 0;
 
-        if (output.isEmpty()) {
-            return true;
+        progress++;
+
+        if (progress >= maxProgress) {
+            craftSteelRecipe();
+            progress = 0;
         }
-
-        return ItemStack.isSameItemSameComponents(output, result)
-                && output.getCount() + result.getCount() <= output.getMaxStackSize();
     }
 
-    private void craftItem() {
-        if (currentRecipe == null) {
+    private void craftSteelRecipe() {
+        if (currentSteelRecipe == null) {
             return;
         }
 
         ItemStack input = items.get(0);
         ItemStack coal = items.get(1);
         ItemStack output = items.get(2);
-        ItemStack result = currentRecipe.result().copy();
+        ItemStack result = currentSteelRecipe.result().copy();
 
         input.shrink(1);
-        coal.shrink(currentRecipe.coalCount());
+        coal.shrink(currentSteelRecipe.coalCount());
 
         if (output.isEmpty()) {
             items.set(2, result);
@@ -171,13 +169,126 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
         setChanged();
     }
 
+    private boolean hasSmeltingRecipe() {
+        if (level == null) {
+            currentSmeltingRecipe = null;
+            return false;
+        }
+
+        SingleRecipeInput recipeInput = new SingleRecipeInput(items.get(0));
+
+        Optional<RecipeHolder<SmeltingRecipe>> recipeHolder =
+                level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, recipeInput, level);
+
+        if (recipeHolder.isEmpty()) {
+            currentSmeltingRecipe = null;
+            return false;
+        }
+
+        RecipeHolder<SmeltingRecipe> recipe = recipeHolder.get();
+        ItemStack result = recipe.value().getResultItem(level.registryAccess());
+
+        if (!canOutput(result)) {
+            currentSmeltingRecipe = null;
+            return false;
+        }
+
+        currentSmeltingRecipe = recipeHolder.get();
+        maxProgress = Math.max(recipe.value().getCookingTime() / 2, 1);
+        return true;
+    }
+
+    private boolean processSmeltingRecipe() {
+        if (burnTime <= 0) {
+            consumeFuel();
+        }
+
+        if (burnTime <= 0) {
+            resetProgress();
+            return false;
+        }
+
+        burnTime--;
+        progress++;
+
+        if (progress >= maxProgress) {
+            craftSmeltingRecipe();
+            progress = 0;
+        }
+
+        return true;
+    }
+
+    private void consumeFuel() {
+        ItemStack fuel = items.get(1);
+
+        if (fuel.isEmpty()) {
+            return;
+        }
+
+        int fuelTime = AbstractFurnaceBlockEntity.getFuel().getOrDefault(fuel.getItem(), 0);
+
+        if (fuelTime <= 0) {
+            return;
+        }
+
+        burnTime = fuelTime;
+        maxBurnTime = fuelTime;
+
+        fuel.shrink(1);
+    }
+
+    private void craftSmeltingRecipe() {
+        if (level == null || currentSmeltingRecipe == null) {
+            return;
+        }
+
+        ItemStack input = items.get(0);
+        ItemStack output = items.get(2);
+        ItemStack result = currentSmeltingRecipe.value().getResultItem(level.registryAccess()).copy();
+
+        input.shrink(1);
+
+        if (output.isEmpty()) {
+            items.set(2, result);
+        } else {
+            output.grow(result.getCount());
+        }
+
+        setChanged();
+    }
+
+    private void resetProgress() {
+        if (progress != 0 || maxProgress != 0) {
+            progress = 0;
+            maxProgress = 0;
+        }
+    }
+
+    private boolean canOutput(ItemStack result) {
+        ItemStack output = items.get(2);
+
+        if (result.isEmpty()) {
+            return false;
+        }
+
+        if (output.isEmpty()) {
+            return true;
+        }
+
+        return ItemStack.isSameItemSameComponents(output, result)
+                && output.getCount() + result.getCount() <= output.getMaxStackSize();
+    }
+
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
 
         ContainerHelper.saveAllItems(tag, items, registries);
-        tag.putInt("progress", progress);
-        tag.putInt("maxProgress", maxProgress);
+        tag.putInt("Progress", progress);
+        tag.putInt("MaxProgress", maxProgress);
+        tag.putInt("BurnTime", burnTime);
+        tag.putInt("MaxBurnTime", maxBurnTime);
     }
 
     @Override
@@ -185,8 +296,10 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
         super.loadAdditional(tag, registries);
 
         ContainerHelper.loadAllItems(tag, items, registries);
-        progress = tag.getInt("progress");
-        maxProgress = tag.getInt("maxProgress");
+        progress = tag.getInt("Progress");
+        maxProgress = tag.getInt("MaxProgress");
+        burnTime = tag.getInt("BurnTime");
+        maxBurnTime = tag.getInt("MaxBurnTime");
     }
 
     @Override

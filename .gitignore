@@ -36,7 +36,13 @@ bin/
 
 # fabric
 
-run/
+run/*
+!run/mods
+!run/mods/[JEI物品管理器] jei-1.21.1-fabric-19.27.0.340.jar
+!run/mods/[文本占位符 API] placeholder-api-2.4.2+1.21.jar
+!run/mods/[模组菜单] modmenu-11.0.4.jar
+!run/mods/[玉 🔍] Jade-1.21.1-Fabric-15.10.5.jar
+!run/mods/[钠] sodium-fabric-0.8.12-alpha.4+mc1.21.1.jar
 
 # java
 

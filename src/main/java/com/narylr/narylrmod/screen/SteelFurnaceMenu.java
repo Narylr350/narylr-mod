@@ -2,6 +2,7 @@ package com.narylr.narylrmod.screen;
 
 import com.narylr.narylrmod.block.entity.SteelFurnaceBlockEntity;
 import com.narylr.narylrmod.item.ModItems;
+import com.narylr.narylrmod.recipe.ModRecipes;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -12,14 +13,19 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import org.jetbrains.annotations.NotNull;
 
 public class SteelFurnaceMenu extends AbstractContainerMenu {
     private final Container container;
     private final ContainerData data;
+    private final Level level;
 
     public SteelFurnaceMenu(int containerId, Inventory playerInventory) {
-        this(containerId, playerInventory, new SimpleContainer(3), new SimpleContainerData(2));
+        this(containerId, playerInventory, new SimpleContainer(3), new SimpleContainerData(4));
     }
 
     public SteelFurnaceMenu(
@@ -39,6 +45,7 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
         super(ModMenus.STEEL_FURNACE_MENU, containerId);
         this.container = container;
         this.data = data;
+        level = playerInventory.player.level();
 
         addDataSlots(data);
 
@@ -46,14 +53,14 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
                 //允许输入槽输入铁锭,生钢坯
-                return itemStack.is(Items.IRON_INGOT) || itemStack.is(ModItems.RAW_STEEL);
+                return true;
             }
         });   // 输入槽
         addSlot(new Slot(container, 1, 56, 53) {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
                 //允许输入煤炭
-                return itemStack.is(Items.COAL);
+                return canPlaceInput(itemStack);
             }
         });   // 煤炭槽
         addSlot(new Slot(container, 2, 116, 35) {
@@ -65,6 +72,27 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
+    }
+
+    private boolean canPlaceInput(ItemStack itemStack) {
+        if (itemStack.isEmpty()) {
+            return false;
+        }
+
+        return hasSteelFurnaceRecipe(itemStack) || hasSmeltingRecipe(itemStack);
+    }
+
+    private boolean hasSteelFurnaceRecipe(ItemStack stack) {
+        return level.getRecipeManager()
+                .getAllRecipesFor(ModRecipes.STEEL_FURNACING_TYPE)
+                .stream()
+                .anyMatch(recipeHolder -> recipeHolder.value().ingredient().test(stack));
+    }
+
+    private boolean hasSmeltingRecipe(ItemStack stack) {
+        return level.getRecipeManager()
+                .getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(stack), level)
+                .isPresent();
     }
 
     //添加背包27格
@@ -110,13 +138,13 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
                 }
             } else {
                 //铁锭,生钢坯到输入槽
-                if (stackInSlot.is(Items.IRON_INGOT) || stackInSlot.is(ModItems.RAW_STEEL)) {
+                if (canPlaceInput(stackInSlot)) {
                     if (!moveItemStackTo(stackInSlot, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
                     //煤炭到煤炭槽
-                } else if (stackInSlot.is(Items.COAL)) {
-                    if (!moveItemStackTo(stackInSlot, 1, 2, true)) {
+                } else if (stackInSlot.is(Items.COAL) || AbstractFurnaceBlockEntity.isFuel(stackInSlot)) {
+                    if (!moveItemStackTo(stackInSlot, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
                     //玩家背包到快捷栏
@@ -170,5 +198,25 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
         }
 
         return progress * arrowWidth / maxProgress;
+    }
+
+    public int getBurnTime() {
+        return data.get(2);
+    }
+
+    public int getMaxBurnTime() {
+        return data.get(3);
+    }
+
+    public int getScaledBurnProgress() {
+        int burnTime = getBurnTime();
+        int maxBurnTime = getMaxBurnTime();
+        int flameHeight = 13;
+
+        if (maxBurnTime == 0 || burnTime == 0) {
+            return 0;
+        }
+
+        return burnTime * flameHeight / maxBurnTime;
     }
 }
