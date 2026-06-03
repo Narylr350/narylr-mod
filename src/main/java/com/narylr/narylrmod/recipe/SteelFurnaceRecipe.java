@@ -22,6 +22,7 @@ public record SteelFurnaceRecipe(
         Ingredient ingredient,
         int coalCount,
         ItemStack result,
+        float experience,
         int cookingTime
 ) implements Recipe<SteelFurnaceRecipeInput> {
 
@@ -69,6 +70,7 @@ public record SteelFurnaceRecipe(
                                         Ingredient.CODEC.fieldOf("ingredient").forGetter(SteelFurnaceRecipe::ingredient),
                                         Codec.INT.fieldOf("coal_count").forGetter(SteelFurnaceRecipe::coalCount),
                                         ItemStack.CODEC.fieldOf("result").forGetter(SteelFurnaceRecipe::result),
+                                        Codec.FLOAT.optionalFieldOf("experience", 0.0F).forGetter(SteelFurnaceRecipe::experience),
                                         Codec.INT.fieldOf("cookingtime").forGetter(SteelFurnaceRecipe::cookingTime)
                         ).apply(instance, SteelFurnaceRecipe::new);
                     }
@@ -82,6 +84,8 @@ public record SteelFurnaceRecipe(
                 SteelFurnaceRecipe::coalCount,
                 ItemStack.STREAM_CODEC,
                 SteelFurnaceRecipe::result,
+                ByteBufCodecs.FLOAT,
+                SteelFurnaceRecipe::experience,
                 ByteBufCodecs.VAR_INT,
                 SteelFurnaceRecipe::cookingTime,
                 SteelFurnaceRecipe::new

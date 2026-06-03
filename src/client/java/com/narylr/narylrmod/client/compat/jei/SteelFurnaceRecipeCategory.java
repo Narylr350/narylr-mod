@@ -12,6 +12,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -72,5 +73,25 @@ public class SteelFurnaceRecipeCategory implements IRecipeCategory<SteelFurnaceR
     @Override
     public void draw(SteelFurnaceRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         background.draw(guiGraphics);
+
+        int seconds = recipe.cookingTime() / 20;
+
+        guiGraphics.drawString(
+                Minecraft.getInstance().font,
+                Component.literal(seconds + "秒"),
+                36,
+                4,
+                0xFF808080,
+                false
+        );
+
+        guiGraphics.drawString(
+                Minecraft.getInstance().font,
+                Component.literal("经验 " + recipe.experience()),
+                36,
+                44,
+                0xFF808080,
+                false
+        );
     }
 }

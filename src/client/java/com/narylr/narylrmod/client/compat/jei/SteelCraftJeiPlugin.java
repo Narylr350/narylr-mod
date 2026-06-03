@@ -5,6 +5,7 @@ import com.narylr.narylrmod.block.ModBlocks;
 import com.narylr.narylrmod.recipe.ModRecipes;
 import com.narylr.narylrmod.recipe.SteelFurnaceRecipe;
 import mezz.jei.api.IModPlugin;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
@@ -12,6 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.client.Minecraft;
+import com.narylr.narylrmod.client.screen.SteelFurnaceScreen;
 
 import java.util.List;
 
@@ -51,6 +53,18 @@ public class SteelCraftJeiPlugin implements IModPlugin {
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(
                 new ItemStack(ModBlocks.STEEL_FURNACE),
+                SteelFurnaceRecipeCategory.RECIPE_TYPE
+        );
+    }
+
+    @Override
+    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+        registration.addRecipeClickArea(
+                SteelFurnaceScreen.class,
+                79,
+                34,
+                24,
+                17,
                 SteelFurnaceRecipeCategory.RECIPE_TYPE
         );
     }
