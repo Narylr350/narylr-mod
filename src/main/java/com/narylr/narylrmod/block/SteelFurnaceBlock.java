@@ -1,6 +1,7 @@
 package com.narylr.narylrmod.block;
 
 import com.mojang.serialization.MapCodec;
+import com.narylr.narylrmod.block.entity.ModBlockEntities;
 import com.narylr.narylrmod.block.entity.SteelFurnaceBlockEntity;
 import com.narylr.narylrmod.screen.SteelFurnaceMenu;
 import net.minecraft.core.BlockPos;
@@ -20,6 +21,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
@@ -36,8 +39,8 @@ public class SteelFurnaceBlock extends BaseEntityBlock {
     //构造方法里设置默认朝向
     public SteelFurnaceBlock(Properties properties) {
         super(properties);
-        registerDefaultState(this.stateDefinition.any().
-                setValue(FACING, Direction.NORTH));
+        registerDefaultState(this.stateDefinition.any()
+                .setValue(FACING, Direction.NORTH));
     }
 
     @Override
@@ -54,9 +57,8 @@ public class SteelFurnaceBlock extends BaseEntityBlock {
     //玩家放置时，让正面朝向玩家
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
-        return defaultBlockState().
-                setValue(FACING, blockPlaceContext.getHorizontalDirection()
-                        .getOpposite());
+        return defaultBlockState()
+                .setValue(FACING, blockPlaceContext.getHorizontalDirection().getOpposite());
     }
 
     //右键打开gui
@@ -72,7 +74,6 @@ public class SteelFurnaceBlock extends BaseEntityBlock {
             BlockEntity blockEntity = level.getBlockEntity(pos);
 
             if (blockEntity instanceof SteelFurnaceBlockEntity steelFurnaceBlockEntity) {
-                player.sendSystemMessage(Component.literal("右键了钢熔炉方块实体"));
                 player.openMenu(new SimpleMenuProvider(new MenuConstructor() {
                     @Override
                     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
@@ -112,5 +113,22 @@ public class SteelFurnaceBlock extends BaseEntityBlock {
         }
 
         super.onRemove(state, level, pos, newState, movedByPiston);
+    }
+
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level,
+            BlockState state,
+            BlockEntityType<T> blockEntityType
+    ) {
+        if (level.isClientSide){
+            return null;
+        }
+
+        return createTickerHelper(
+                blockEntityType,
+                ModBlockEntities.STEEL_FURNACE_BLOCK_ENTITY,
+                SteelFurnaceBlockEntity::serverTick
+        );
     }
 }
