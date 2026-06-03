@@ -1,0 +1,12 @@
+{
+  "type": "narylr-mod:steel_furnacing",
+  "ingredient": {
+    "item": "narylr-mod:raw_steel"
+  },
+  "coal_count": 2,
+  "result": {
+    "id": "narylr-mod:steel_ingot",
+    "count": 1
+  },
+  "cookingtime": 80
+}

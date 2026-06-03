@@ -2,6 +2,9 @@ package com.narylr.narylrmod.block.entity;
 
 import com.narylr.narylrmod.block.SteelFurnaceBlock;
 import com.narylr.narylrmod.item.ModItems;
+import com.narylr.narylrmod.recipe.ModRecipes;
+import com.narylr.narylrmod.recipe.SteelFurnaceRecipe;
+import com.narylr.narylrmod.recipe.SteelFurnaceRecipeInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -13,9 +16,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.Optional;
 
 public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
     //临时存储在内存中
@@ -47,6 +53,7 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
         }
     };
 
+    private SteelFurnaceRecipe currentRecipe;
     //当前已经烧了多久
     private int progress = 0;
     //总共要烧多久
@@ -75,7 +82,7 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
             return;
         }
 
-        Boolean working = blockEntity.hasRecipe();
+        boolean working = blockEntity.hasRecipe();
 
         if (state.getValue(SteelFurnaceBlock.LIT) != working) {
             level.setBlock(pos, state.setValue(SteelFurnaceBlock.LIT, working), 3);
@@ -99,58 +106,66 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
     }
 
     private boolean hasRecipe() {
-        var input = items.get(0);
-        var coal = items.get(1);
-        var output = items.get(2);
-
-        if (!canOutputSteel(output)) {
+        if (level == null) {
             maxProgress = 0;
+            currentRecipe = null;
             return false;
         }
 
-        if (input.is(Items.IRON_INGOT) && coal.is(Items.COAL) && coal.getCount() >= 4) {
-            maxProgress = 160;
-            return true;
+        SteelFurnaceRecipeInput recipeInput = new SteelFurnaceRecipeInput(items.get(0), items.get(1));
+
+        Optional<RecipeHolder<SteelFurnaceRecipe>> recipeHolder = level
+                .getRecipeManager()
+                .getRecipeFor(ModRecipes.STEEL_FURNACING_TYPE, recipeInput, level);
+
+        if (recipeHolder.isEmpty()) {
+            maxProgress = 0;
+            currentRecipe = null;
+            return false;
         }
 
-        if (input.is(ModItems.RAW_STEEL) && coal.is(Items.COAL) && coal.getCount() >= 2) {
-            maxProgress = 80;
-            return true;
+        SteelFurnaceRecipe recipe = recipeHolder.get().value();
+        ItemStack result = recipe.result();
+
+        if (!canOutput(result)) {
+            maxProgress = 0;
+            currentRecipe = null;
+            return false;
         }
 
-        maxProgress = 0;
-        return false;
+        maxProgress = recipe.cookingTime();
+        currentRecipe = recipe;
+        return true;
     }
 
-    private boolean canOutputSteel(ItemStack output) {
+    private boolean canOutput(ItemStack result) {
+        ItemStack output = items.get(2);
+
         if (output.isEmpty()) {
             return true;
         }
 
-        return output.is(ModItems.STEEL_INGOT) && output.getCount() < output.getMaxStackSize();
+        return ItemStack.isSameItemSameComponents(output, result)
+                && output.getCount() + result.getCount() <= output.getMaxStackSize();
     }
 
     private void craftItem() {
-        var input = items.get(0);
-        var coal = items.get(1);
-        var output = items.get(2);
-
-        if (input.is(Items.IRON_INGOT)) {
-            input.shrink(1);
-            coal.shrink(4);
-        } else if (input.is(ModItems.RAW_STEEL)) {
-            input.shrink(1);
-            coal.shrink(2);
-        } else {
+        if (currentRecipe == null) {
             return;
         }
 
+        ItemStack input = items.get(0);
+        ItemStack coal = items.get(1);
+        ItemStack output = items.get(2);
+        ItemStack result = currentRecipe.result().copy();
+
+        input.shrink(1);
+        coal.shrink(currentRecipe.coalCount());
+
         if (output.isEmpty()) {
-            //输出为空,new ItemStack 1个钢锭
-            items.set(2, new ItemStack(ModItems.STEEL_INGOT, 1));
+            items.set(2, result);
         } else {
-            //不为空就+1
-            output.grow(1);
+            output.grow(result.getCount());
         }
 
         setChanged();

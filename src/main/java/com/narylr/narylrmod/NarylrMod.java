@@ -4,6 +4,7 @@ import com.narylr.narylrmod.block.ModBlocks;
 import com.narylr.narylrmod.block.entity.ModBlockEntities;
 import com.narylr.narylrmod.item.ModItemGroup;
 import com.narylr.narylrmod.item.ModItems;
+import com.narylr.narylrmod.recipe.ModRecipes;
 import com.narylr.narylrmod.screen.ModMenus;
 import net.fabricmc.api.ModInitializer;
 
@@ -28,6 +29,7 @@ public class NarylrMod implements ModInitializer {
 		ModItems.registerModItems();
 		ModBlocks.registerModBlocks();
 		ModBlockEntities.registerBlockEntities();
+		ModRecipes.registerRecipes();
 		ModMenus.registerMenus();
 		ModItemGroup.registerItemGroups();
 	}
