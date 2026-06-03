@@ -2,23 +2,24 @@ package com.narylr.narylrmod.screen;
 
 import com.narylr.narylrmod.block.entity.SteelFurnaceBlockEntity;
 import com.narylr.narylrmod.item.ModItems;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 public class SteelFurnaceMenu extends AbstractContainerMenu {
     private final Container container;
+    private final ContainerData data;
 
     public SteelFurnaceMenu(int containerId, Inventory playerInventory) {
-        this(containerId, playerInventory, new SimpleContainer(3));
+        this(containerId, playerInventory, new SimpleContainer(3), new SimpleContainerData(2));
     }
 
     public SteelFurnaceMenu(
@@ -26,16 +27,20 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
             Inventory playerInventory,
             SteelFurnaceBlockEntity blockEntity
     ) {
-        this(containerId, playerInventory, (Container) blockEntity);
+        this(containerId, playerInventory, blockEntity, blockEntity.getData());
     }
 
     public SteelFurnaceMenu(
             int containerId,
             Inventory playerInventory,
-            Container container
+            Container container,
+            ContainerData data
     ) {
         super(ModMenus.STEEL_FURNACE_MENU, containerId);
         this.container = container;
+        this.data = data;
+
+        addDataSlots(data);
 
         addSlot(new Slot(container, 0, 56, 17) {
             @Override
@@ -145,5 +150,25 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return container.stillValid(player);
+    }
+
+    public int getProgress() {
+        return data.get(0);
+    }
+
+    public int getMaxProgress() {
+        return data.get(1);
+    }
+
+    public int getScaledProgress(){
+        int progress = getProgress();
+        int maxProgress = getMaxProgress();
+        int arrowWidth = 24;
+
+        if (maxProgress == 0 || progress ==0) {
+            return 0;
+        }
+
+        return progress * arrowWidth / maxProgress;
     }
 }

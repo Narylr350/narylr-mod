@@ -5,22 +5,47 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
     //临时存储在内存中
     private final SimpleContainer inventory = new SimpleContainer(3);
     //钢熔炉中的物品创建List集合存储
     private final NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
+    //同步燃烧时间到客户端
+    private final ContainerData data = new ContainerData() {
+        @Override
+        public int get(int index) {
+            return switch (index) {
+                case 0 -> progress;
+                case 1 -> maxProgress;
+                default -> 0;
+            };
+        }
+
+        @Override
+        public void set(int index, int value) {
+            switch (index){
+                case 0 -> progress = value;
+                case 1 -> maxProgress = value;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+    };
 
     //当前已经烧了多久
     private int progress = 0;
@@ -34,6 +59,10 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
     @Deprecated
     public SimpleContainer getInventory() {
         return inventory;
+    }
+
+    public ContainerData getData(){
+        return data;
     }
 
     public static void serverTick(

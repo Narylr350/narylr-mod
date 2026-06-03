@@ -9,6 +9,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class SteelFurnaceScreen extends AbstractContainerScreen<SteelFurnaceMenu> {
     public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/gui/container/furnace.png");
+    public static final ResourceLocation BURN_PROGRESS_SPRITE  = ResourceLocation.fromNamespaceAndPath("minecraft", "container/furnace/burn_progress");
 
     public SteelFurnaceScreen(SteelFurnaceMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -33,6 +34,22 @@ public class SteelFurnaceScreen extends AbstractContainerScreen<SteelFurnaceMenu
         int y = topPos;
 
         guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
+
+        int progress = menu.getScaledProgress();
+
+        if (progress > 0) {
+            guiGraphics.blitSprite(
+                    BURN_PROGRESS_SPRITE,
+                    24,
+                    16,
+                    0,
+                    0,
+                    x + 79,
+                    y + 34,
+                    progress,
+                    16
+            );
+        }
     }
 
     @Override
