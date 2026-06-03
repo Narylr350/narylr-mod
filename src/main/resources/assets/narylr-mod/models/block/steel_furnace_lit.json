@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "north": "narylr-mod:block/steel_furnace_front_lit",
+    "south": "narylr-mod:block/steel_furnace_side",
+    "east": "narylr-mod:block/steel_furnace_side",
+    "west": "narylr-mod:block/steel_furnace_side",
+    "up": "narylr-mod:block/steel_furnace_top_lit",
+    "down": "narylr-mod:block/steel_furnace_bottom",
+    "particle": "narylr-mod:block/steel_furnace_front_lit"
+  }
+}

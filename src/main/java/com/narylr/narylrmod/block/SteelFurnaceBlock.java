@@ -10,6 +10,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -25,6 +27,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
@@ -36,10 +39,14 @@ public class SteelFurnaceBlock extends BaseEntityBlock {
 
     public static final MapCodec<SteelFurnaceBlock> CODEC = simpleCodec(SteelFurnaceBlock::new);
 
-    //构造方法里设置默认朝向
+    //熔炉状态
+    public static final BooleanProperty LIT = BooleanProperty.create("lit");
+
+    //构造方法里设置默认朝向,LIT
     public SteelFurnaceBlock(Properties properties) {
         super(properties);
         registerDefaultState(this.stateDefinition.any()
+                .setValue(LIT,false)
                 .setValue(FACING, Direction.NORTH));
     }
 
@@ -48,10 +55,10 @@ public class SteelFurnaceBlock extends BaseEntityBlock {
         return CODEC;
     }
 
-    //告诉方块状态系统有FACING这个属性
+    //告诉方块状态系统有FACING,LIT这个属性
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING,LIT);
     }
 
     //玩家放置时，让正面朝向玩家
@@ -130,5 +137,14 @@ public class SteelFurnaceBlock extends BaseEntityBlock {
                 ModBlockEntities.STEEL_FURNACE_BLOCK_ENTITY,
                 SteelFurnaceBlockEntity::serverTick
         );
+    }
+
+    @Override
+    public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
+        super.stepOn(level, pos, state, entity);
+
+        if (!level.isClientSide && state.getValue(LIT) && entity instanceof LivingEntity) {
+            entity.hurt(level.damageSources().hotFloor(),1.0F);
+        }
     }
 }

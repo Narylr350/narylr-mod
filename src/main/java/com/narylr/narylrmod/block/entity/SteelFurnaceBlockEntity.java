@@ -1,5 +1,6 @@
 package com.narylr.narylrmod.block.entity;
 
+import com.narylr.narylrmod.block.SteelFurnaceBlock;
 import com.narylr.narylrmod.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -15,7 +16,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
     //临时存储在内存中
@@ -35,7 +35,7 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
 
         @Override
         public void set(int index, int value) {
-            switch (index){
+            switch (index) {
                 case 0 -> progress = value;
                 case 1 -> maxProgress = value;
             }
@@ -61,7 +61,7 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
         return inventory;
     }
 
-    public ContainerData getData(){
+    public ContainerData getData() {
         return data;
     }
 
@@ -75,7 +75,13 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
             return;
         }
 
-        if (blockEntity.hasRecipe()) {
+        Boolean working = blockEntity.hasRecipe();
+
+        if (state.getValue(SteelFurnaceBlock.LIT) != working) {
+            level.setBlock(pos, state.setValue(SteelFurnaceBlock.LIT, working), 3);
+        }
+
+        if (working) {
             blockEntity.progress++;
 
             if (blockEntity.progress >= blockEntity.maxProgress) {
