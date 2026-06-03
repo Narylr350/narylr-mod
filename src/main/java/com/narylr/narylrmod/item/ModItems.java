@@ -35,6 +35,7 @@ public class ModItems {
             ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_furnace"),
             new BlockItem(ModBlocks.STEEL_FURNACE,new Properties())
     );
+
     public static void registerModItems() {
         NarylrMod.LOGGER.info("注册物品");
     }

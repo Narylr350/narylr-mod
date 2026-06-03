@@ -6,6 +6,7 @@ import com.narylr.narylrmod.screen.SteelFurnaceMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -35,7 +36,7 @@ public class SteelFurnaceBlock extends BaseEntityBlock {
     //构造方法里设置默认朝向
     public SteelFurnaceBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().
+        registerDefaultState(this.stateDefinition.any().
                 setValue(FACING, Direction.NORTH));
     }
 
@@ -53,8 +54,9 @@ public class SteelFurnaceBlock extends BaseEntityBlock {
     //玩家放置时，让正面朝向玩家
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
-        return this.defaultBlockState().
-                setValue(FACING, blockPlaceContext.getHorizontalDirection().getOpposite());
+        return defaultBlockState().
+                setValue(FACING, blockPlaceContext.getHorizontalDirection()
+                        .getOpposite());
     }
 
     //右键打开gui
@@ -90,5 +92,25 @@ public class SteelFurnaceBlock extends BaseEntityBlock {
     @Override
     protected RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
+    }
+
+    @Override
+    protected void onRemove(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            BlockState newState,
+            boolean movedByPiston
+    ) {
+        if (state.getBlock() != newState.getBlock()) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+
+            if (blockEntity instanceof SteelFurnaceBlockEntity steelFurnaceBlockEntity) {
+                Containers.dropContents(level, pos, steelFurnaceBlockEntity);
+                level.updateNeighbourForOutputSignal(pos, this);
+            }
+        }
+
+        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 }

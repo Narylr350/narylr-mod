@@ -12,33 +12,33 @@ public class SteelFurnaceScreen extends AbstractContainerScreen<SteelFurnaceMenu
 
     public SteelFurnaceScreen(SteelFurnaceMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
-        this.imageWidth = 176;
-        this.imageHeight = 166;
+        imageWidth = 176;
+        imageHeight = 166;
     }
 
     @Override
     protected void init() {
         super.init();
 
-        this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
-        this.titleLabelY = 8;
+        titleLabelX = (imageWidth - font.width(title)) / 2;
+        titleLabelY = 8;
 
-        this.inventoryLabelX = 8;
-        this.inventoryLabelY = 72;
+        inventoryLabelX = 8;
+        inventoryLabelY = 72;
     }
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
-        int x = this.leftPos;
-        int y = this.topPos;
+        int x = leftPos;
+        int y = topPos;
 
-        guiGraphics.blit(TEXTURE, x, y, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
     }
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        this.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
+        renderBackground(guiGraphics, mouseX, mouseY, partialTick);
         super.render(guiGraphics, mouseX, mouseY, partialTick);
-        this.renderTooltip(guiGraphics, mouseX, mouseY);
+        renderTooltip(guiGraphics, mouseX, mouseY);
     }
 }

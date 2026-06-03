@@ -2,15 +2,16 @@ package com.narylr.narylrmod.screen;
 
 import com.narylr.narylrmod.block.entity.SteelFurnaceBlockEntity;
 import com.narylr.narylrmod.item.ModItems;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 public class SteelFurnaceMenu extends AbstractContainerMenu {
@@ -25,28 +26,32 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
             Inventory playerInventory,
             SteelFurnaceBlockEntity blockEntity
     ) {
-        this(containerId, playerInventory, blockEntity.getInventory());
+        this(containerId, playerInventory, (Container) blockEntity);
     }
 
-    public SteelFurnaceMenu(int containerId, Inventory playerInventory, Container container) {
+    public SteelFurnaceMenu(
+            int containerId,
+            Inventory playerInventory,
+            Container container
+    ) {
         super(ModMenus.STEEL_FURNACE_MENU, containerId);
         this.container = container;
 
-        this.addSlot(new Slot(container, 0, 56, 17) {
+        addSlot(new Slot(container, 0, 56, 17) {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
                 //允许输入槽输入铁锭,生钢坯
                 return itemStack.is(Items.IRON_INGOT) || itemStack.is(ModItems.RAW_STEEL);
             }
         });   // 输入槽
-        this.addSlot(new Slot(container, 1, 56, 53) {
+        addSlot(new Slot(container, 1, 56, 53) {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
                 //允许输入煤炭
                 return itemStack.is(Items.COAL);
             }
         });   // 煤炭槽
-        this.addSlot(new Slot(container, 2, 116, 35) {
+        addSlot(new Slot(container, 2, 116, 35) {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
                 return false;
@@ -61,7 +66,7 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
     private void addPlayerInventory(Inventory playerInventory) {
         for (int row = 0; row < 3; row++) {
             for (int column = 0; column < 9; column++) {
-                this.addSlot(new Slot(
+                addSlot(new Slot(
                         playerInventory,
                         column + row * 9 + 9,
                         8 + column * 18,
@@ -74,7 +79,7 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
     //添加物品栏9格
     private void addPlayerHotbar(Inventory playerInventory) {
         for (int column = 0; column < 9; column++) {
-            this.addSlot(new Slot(
+            addSlot(new Slot(
                     playerInventory,
                     column,
                     8 + column * 18,
@@ -86,7 +91,7 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
     @Override
     public @NotNull ItemStack quickMoveStack(Player player, int index) {
         ItemStack originalStack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(index);
+        Slot slot = slots.get(index);
 
         if (slot.hasItem()) {
             ItemStack stackInSlot = slot.getItem();
@@ -95,28 +100,28 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
             //机器槽 0 1 2 其余为玩家背包
             //机器到玩家背包
             if (index < 3) {
-                if (!this.moveItemStackTo(stackInSlot, 3, 39, false)) {
+                if (!moveItemStackTo(stackInSlot, 3, 39, false)) {
                     return ItemStack.EMPTY;
                 }
             } else {
                 //铁锭,生钢坯到输入槽
                 if (stackInSlot.is(Items.IRON_INGOT) || stackInSlot.is(ModItems.RAW_STEEL)) {
-                    if (!this.moveItemStackTo(stackInSlot, 0, 1, false)) {
+                    if (!moveItemStackTo(stackInSlot, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
                     //煤炭到煤炭槽
                 } else if (stackInSlot.is(Items.COAL)) {
-                    if (!this.moveItemStackTo(stackInSlot, 1, 2, true)) {
+                    if (!moveItemStackTo(stackInSlot, 1, 2, true)) {
                         return ItemStack.EMPTY;
                     }
                     //玩家背包到快捷栏
-                }else if (index < 30){
-                    if (!this.moveItemStackTo(stackInSlot,30,39,false)){
+                } else if (index < 30) {
+                    if (!moveItemStackTo(stackInSlot, 30, 39, false)) {
                         return ItemStack.EMPTY;
                     }
                     //快捷栏到玩家背包
-                }else if (index<39){
-                    if (!this.moveItemStackTo(stackInSlot,3,30,false)){
+                } else if (index < 39) {
+                    if (!moveItemStackTo(stackInSlot, 3, 30, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
@@ -139,6 +144,6 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return true;
+        return container.stillValid(player);
     }
 }
