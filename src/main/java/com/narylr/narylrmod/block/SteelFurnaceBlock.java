@@ -6,7 +6,12 @@ import com.narylr.narylrmod.block.entity.SteelFurnaceBlockEntity;
 import com.narylr.narylrmod.screen.SteelFurnaceMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
@@ -146,5 +151,79 @@ public class SteelFurnaceBlock extends BaseEntityBlock {
         if (!level.isClientSide && state.getValue(LIT) && entity instanceof LivingEntity) {
             entity.hurt(level.damageSources().hotFloor(),1.0F);
         }
+    }
+
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        if (!state.getValue(LIT)) {
+            return;
+        }
+
+        double x = pos.getX() + 0.5;
+        double y = pos.getY();
+        double z = pos.getZ() + 0.5;
+
+        if (random.nextDouble() < 0.1) {
+            level.playLocalSound(
+                    x,
+                    y,
+                    z,
+                    SoundEvents.FURNACE_FIRE_CRACKLE,
+                    SoundSource.BLOCKS,
+                    1.0F,
+                    1.0F,
+                    false
+            );
+        }
+
+        Direction direction = state.getValue(FACING);
+        Direction.Axis axis = direction.getAxis();
+
+        double frontOffset = 0.52;
+        double sideRandom = random.nextDouble() * 0.6 - 0.3;
+
+        double particleX = x + direction.getStepX() * frontOffset;
+        double particleY = y + random.nextDouble() * 0.375 + 0.4;
+        double particleZ = z + direction.getStepZ() * frontOffset;
+
+        if (axis == Direction.Axis.X) {
+            particleZ += sideRandom;
+        } else {
+            particleX += sideRandom;
+        }
+
+        level.addParticle(
+                ParticleTypes.SMOKE,
+                particleX,
+                particleY,
+                particleZ,
+                0.0,
+                0.0,
+                0.0
+        );
+
+        level.addParticle(
+                ParticleTypes.FLAME,
+                particleX,
+                particleY,
+                particleZ,
+                0.0,
+                0.0,
+                0.0
+        );
+
+        double topSmokeX = x + random.nextDouble() * 0.4 - 0.2;
+        double topSmokeY = pos.getY() + 1.05;
+        double topSmokeZ = z + random.nextDouble() * 0.4 - 0.2;
+
+        level.addParticle(
+                ParticleTypes.SMOKE,
+                topSmokeX,
+                topSmokeY,
+                topSmokeZ,
+                0.0,
+                0.03,
+                0.0
+        );
     }
 }
