@@ -20,6 +20,9 @@
 		],
 		"client": [
 			"com.narylr.narylrmod.client.NarylrModClient"
+		],
+		"jei_mod_plugin": [
+			"com.narylr.narylrmod.client.compat.jei.SteelCraftJeiPlugin"
 		]
 	},
 	"mixins": [
