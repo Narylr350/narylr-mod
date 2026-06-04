@@ -35,8 +35,8 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-	modCompileOnly "mezz.jei:jei-1.21.1-fabric-api:19.27.0.340"
-	modRuntimeOnly "mezz.jei:jei-1.21.1-fabric:19.27.0.340"
+	modCompileOnly files("run/mods/jei-1.21.1-fabric-19.27.0.340.jar")
+	modCompileOnly files("run/mods/Jade-1.21.1-Fabric-15.10.5.jar")
 }
 
 processResources {
@@ -85,11 +85,5 @@ publishing {
 		// Notice: This block does NOT have the same function as the block in the top level.
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
-	}
-}
-repositories {
-	maven {
-		name = "BlameJared"
-		url = uri("https://maven.blamejared.com")
 	}
 }

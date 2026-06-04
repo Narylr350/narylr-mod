@@ -573,4 +573,39 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
         items.clear();
         setChanged();
     }
+
+    // 获取钢熔炉当前工作模式
+    public int getMode() {
+        return mode;
+    }
+
+    // 判断钢熔炉当前是否处于炼钢模式
+    public boolean isSteelMode() {
+        return mode == MODE_STEEL;
+    }
+
+    // 判断钢熔炉当前是否处于原版熔炼模式
+    public boolean isSmeltingMode() {
+        return mode == MODE_SMELTING;
+    }
+
+    // 获取当前处理进度
+    public int getProgress() {
+        return progress;
+    }
+
+    // 获取当前处理最大进度
+    public int getMaxProgress() {
+        return maxProgress;
+    }
+
+    // 获取当前剩余燃烧时间
+    public int getBurnTime() {
+        return burnTime;
+    }
+
+    // 获取当前燃料最大燃烧时间
+    public int getMaxBurnTime() {
+        return maxBurnTime;
+    }
 }
