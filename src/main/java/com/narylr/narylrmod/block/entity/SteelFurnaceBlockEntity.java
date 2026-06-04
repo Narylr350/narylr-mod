@@ -8,8 +8,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
@@ -41,6 +44,8 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
     private static final int MODE_SMELTING = 2;
     // 钢熔炉当前的工作模式
     private int mode = MODE_IDLE;
+    // 当前机器已经积累但还没有发给玩家的经验值
+    private float experienceStored = 0.0F;
     // 当前使用的钢铁配方
     private SteelFurnaceRecipe currentSteelRecipe;
     // 当前使用的熔炼配方
@@ -98,7 +103,13 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
         setChanged(level, pos, state);
     }
 
+    // 根据当前工作模式处理机器逻辑，炼钢配方拥有最高优先级
     private boolean tickWork() {
+        if (mode == MODE_SMELTING && canStartSteelRecipe()) {
+            stopWorking();
+            return tryStartSteelRecipe();
+        }
+
         if (mode == MODE_IDLE) {
             return tryStartSteelRecipe() || tryStartSmeltingRecipe();
         }
@@ -151,6 +162,13 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
         return recipeHolder.map(RecipeHolder::value).orElse(null);
     }
 
+    // 判断当前输入槽和燃料槽是否已经满足炼钢配方
+    private boolean canStartSteelRecipe() {
+        SteelFurnaceRecipe recipe = findSteelRecipeWithCoal();
+
+        return recipe != null && canOutput(recipe.result());
+    }
+
     private SteelFurnaceRecipe findSteelRecipeByInputOnly() {
         if (level == null) {
             return null;
@@ -200,6 +218,7 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
         return true;
     }
 
+    // 完成炼钢配方，消耗输入物并把产物放入输出槽
     private void finishSteelRecipe() {
         if (currentSteelRecipe == null) {
             return;
@@ -210,6 +229,7 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
         ItemStack result = currentSteelRecipe.result().copy();
 
         input.shrink(1);
+        experienceStored += currentSteelRecipe.experience();
 
         if (output.isEmpty()) {
             items.set(2, result);
@@ -312,12 +332,7 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
 
         if (burnTime <= 0) {
             stopWorking();
-
-            if (tryStartSmeltingRecipe()) {
-                return true;
-            }
-
-            return false;
+            return tryStartSteelRecipe() || tryStartSmeltingRecipe();
         }
 
         setChanged();
@@ -344,6 +359,7 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
         return true;
     }
 
+    // 完成普通熔炼配方，消耗输入物并把产物放入输出槽
     private void finishSmeltingRecipe() {
         if (level == null || currentSmeltingRecipe == null) {
             return;
@@ -354,6 +370,7 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
         ItemStack result = currentSmeltingRecipe.value().getResultItem(level.registryAccess()).copy();
 
         input.shrink(1);
+        experienceStored += currentSmeltingRecipe.value().getExperience();
 
         if (output.isEmpty()) {
             items.set(2, result);
@@ -393,6 +410,36 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
                 && output.getCount() + result.getCount() <= output.getMaxStackSize();
     }
 
+    // 根据小数经验计算最终应该生成多少经验球
+    private int getExperienceAmount() {
+        int experience = Mth.floor(experienceStored);
+        float fraction = experienceStored - experience;
+
+        if (fraction > 0.0F && level != null && level.random.nextFloat() < fraction) {
+            experience++;
+        }
+
+        return experience;
+    }
+
+    // 玩家取出输出槽产物时，把机器积累的经验发给玩家
+    public void awardStoredExperience(Player player) {
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
+        int experience = getExperienceAmount();
+
+        if (experience <= 0) {
+            return;
+        }
+
+        ExperienceOrb.award(serverLevel, player.position(), experience);
+
+        experienceStored = 0.0F;
+        setChanged();
+    }
+
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
@@ -402,6 +449,7 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
         tag.putInt("MaxProgress", maxProgress);
         tag.putInt("BurnTime", burnTime);
         tag.putInt("MaxBurnTime", maxBurnTime);
+        tag.putFloat("ExperienceStored", experienceStored);
     }
 
     @Override
@@ -413,6 +461,8 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
         maxProgress = tag.getInt("MaxProgress");
         burnTime = tag.getInt("BurnTime");
         maxBurnTime = tag.getInt("MaxBurnTime");
+        mode = tag.getInt("Mode");
+        experienceStored = tag.getFloat("ExperienceStored");
     }
 
     @Override

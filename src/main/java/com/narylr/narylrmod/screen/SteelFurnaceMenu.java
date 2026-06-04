@@ -23,9 +23,11 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
     private final Container container;
     private final ContainerData data;
     private final Level level;
+    // 当前菜单绑定的钢熔炉方块实体，客户端临时菜单可能为空
+    private final SteelFurnaceBlockEntity blockEntity;
 
     public SteelFurnaceMenu(int containerId, Inventory playerInventory) {
-        this(containerId, playerInventory, new SimpleContainer(3), new SimpleContainerData(4));
+        this(containerId, playerInventory, new SimpleContainer(3), new SimpleContainerData(4), null);
     }
 
     public SteelFurnaceMenu(
@@ -33,18 +35,20 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
             Inventory playerInventory,
             SteelFurnaceBlockEntity blockEntity
     ) {
-        this(containerId, playerInventory, blockEntity, blockEntity.getData());
+        this(containerId, playerInventory, blockEntity, blockEntity.getData(), blockEntity);
     }
 
     public SteelFurnaceMenu(
             int containerId,
             Inventory playerInventory,
             Container container,
-            ContainerData data
+            ContainerData data,
+            SteelFurnaceBlockEntity blockEntity
     ) {
         super(ModMenus.STEEL_FURNACE_MENU, containerId);
         this.container = container;
         this.data = data;
+        this.blockEntity = blockEntity;
         level = playerInventory.player.level();
 
         addDataSlots(data);
@@ -67,6 +71,15 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
                 return false;
+            }
+
+            @Override
+            public void onTake(Player player, ItemStack itemStack) {
+                super.onTake(player, itemStack);
+
+                if (blockEntity != null) {
+                    blockEntity.awardStoredExperience(player);
+                }
             }
         });  // 输出槽
 
