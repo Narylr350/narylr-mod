@@ -8,8 +8,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class SteelFurnaceScreen extends AbstractContainerScreen<SteelFurnaceMenu> {
-    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/gui/container/furnace.png");
-    public static final ResourceLocation BURN_PROGRESS_SPRITE  = ResourceLocation.fromNamespaceAndPath("minecraft", "container/furnace/burn_progress");
+    public static final ResourceLocation TEXTURE =
+            ResourceLocation.fromNamespaceAndPath("narylr-mod", "textures/gui/container/furnace.png");
+    public static final ResourceLocation BURN_PROGRESS_SPRITE  =
+            ResourceLocation.fromNamespaceAndPath("narylr-mod", "container/steel_furnace/burn_progress");
+    private static final ResourceLocation LIT_PROGRESS_SPRITE =
+            ResourceLocation.fromNamespaceAndPath("narylr-mod", "container/steel_furnace/lit_progress");
 
     public SteelFurnaceScreen(SteelFurnaceMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -35,19 +39,25 @@ public class SteelFurnaceScreen extends AbstractContainerScreen<SteelFurnaceMenu
 
         guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
 
-        int progress = menu.getScaledProgress();
+        int burnProgress = menu.getScaledBurnProgress();
+        if (burnProgress > 0) {
+            guiGraphics.blitSprite(
+                    LIT_PROGRESS_SPRITE,
+                    14, 14,
+                    0, 14 - burnProgress,
+                    x + 56, y + 36 + 14 - burnProgress,
+                    14, burnProgress
+            );
+        }
 
+        int progress = menu.getScaledProgress();
         if (progress > 0) {
             guiGraphics.blitSprite(
                     BURN_PROGRESS_SPRITE,
-                    24,
-                    16,
-                    0,
-                    0,
-                    x + 79,
-                    y + 34,
-                    progress,
-                    16
+                    24, 16,
+                    0, 0,
+                    x + 79, y + 34,
+                    progress, 16
             );
         }
     }

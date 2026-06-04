@@ -53,14 +53,14 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
                 //允许输入槽输入铁锭,生钢坯
-                return true;
+                return canPlaceInput(itemStack);
             }
         });   // 输入槽
         addSlot(new Slot(container, 1, 56, 53) {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
                 //允许输入煤炭
-                return canPlaceInput(itemStack);
+                return itemStack.is(Items.COAL) || AbstractFurnaceBlockEntity.isFuel(itemStack);
             }
         });   // 煤炭槽
         addSlot(new Slot(container, 2, 116, 35) {
