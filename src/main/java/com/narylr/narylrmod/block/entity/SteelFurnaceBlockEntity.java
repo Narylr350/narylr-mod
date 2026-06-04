@@ -440,6 +440,28 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
         setChanged();
     }
 
+    // 方块被破坏时，把机器积累的经验释放到方块位置
+    public void dropStoredExperience() {
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
+        int experience = getExperienceAmount();
+
+        if (experience <= 0) {
+            return;
+        }
+
+        ExperienceOrb.award(
+                serverLevel,
+                worldPosition.getCenter(),
+                experience
+        );
+
+        experienceStored = 0.0F;
+        setChanged();
+    }
+
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);

@@ -119,6 +119,7 @@ public class SteelFurnaceBlock extends BaseEntityBlock {
             BlockEntity blockEntity = level.getBlockEntity(pos);
 
             if (blockEntity instanceof SteelFurnaceBlockEntity steelFurnaceBlockEntity) {
+                steelFurnaceBlockEntity.dropStoredExperience();
                 Containers.dropContents(level, pos, steelFurnaceBlockEntity);
                 level.updateNeighbourForOutputSignal(pos, this);
             }
