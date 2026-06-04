@@ -31,6 +31,11 @@ public class ModItemGroup {
                             output.accept(ModItems.STEEL_BLOCK_ITEM);//钢块
                             output.accept(ModItems.RAW_STEEL);//生钢胚
                             output.accept(ModItems.STEEL_FURNACE_ITEM);//钢熔炉
+                            output.accept(ModItems.STEEL_SWORD);//钢剑
+                            output.accept(ModItems.STEEL_PICKAXE);//钢镐
+                            output.accept(ModItems.STEEL_AXE);//钢斧
+                            output.accept(ModItems.STEEL_SHOVEL);//钢铲
+                            output.accept(ModItems.STEEL_HOE);//钢锄
                         }
                     })
                     .build()

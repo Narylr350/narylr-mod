@@ -4,6 +4,11 @@
   "item.narylr-mod.steel_ingot": "钢锭",
   "item.narylr-mod.steel_nugget": "钢粒",
   "item.narylr-mod.raw_steel": "生钢坯",
+  "item.narylr-mod.steel_sword": "钢剑",
+  "item.narylr-mod.steel_pickaxe": "钢镐",
+  "item.narylr-mod.steel_axe": "钢斧",
+  "item.narylr-mod.steel_shovel": "钢锹",
+  "item.narylr-mod.steel_hoe": "钢锄",
 
   "block.narylr-mod.steel_block": "钢块",
   "block.narylr-mod.steel_furnace": "钢熔炉",

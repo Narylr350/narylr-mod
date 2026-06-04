@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S",
+    "T",
+    "T"
+  ],
+  "key": {
+    "S": {
+      "item": "narylr-mod:steel_ingot"
+    },
+    "T": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "id": "narylr-mod:steel_shovel",
+    "count": 1
+  }
+}
