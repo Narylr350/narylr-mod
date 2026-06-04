@@ -5,6 +5,7 @@ import com.narylr.narylrmod.block.ModBlocks;
 import com.narylr.narylrmod.recipe.ModRecipes;
 import com.narylr.narylrmod.recipe.SteelFurnaceRecipe;
 import mezz.jei.api.IModPlugin;
+import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
@@ -49,14 +50,23 @@ public class SteelCraftJeiPlugin implements IModPlugin {
         registration.addRecipes(SteelFurnaceRecipeCategory.RECIPE_TYPE, recipes);
     }
 
+    // 注册钢熔炉作为 JEI 配方催化剂：既能炼钢，也能执行原版熔炼
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+        ItemStack steelFurnace = new ItemStack(ModBlocks.STEEL_FURNACE);
+
         registration.addRecipeCatalyst(
-                new ItemStack(ModBlocks.STEEL_FURNACE),
+                steelFurnace,
                 SteelFurnaceRecipeCategory.RECIPE_TYPE
+        );
+
+        registration.addRecipeCatalyst(
+                steelFurnace,
+                RecipeTypes.SMELTING
         );
     }
 
+    // 注册钢熔炉 GUI 的 JEI 点击区域，点击箭头时同时显示炼钢配方和原版熔炼配方
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         registration.addRecipeClickArea(
@@ -65,7 +75,8 @@ public class SteelCraftJeiPlugin implements IModPlugin {
                 34,
                 24,
                 17,
-                SteelFurnaceRecipeCategory.RECIPE_TYPE
+                SteelFurnaceRecipeCategory.RECIPE_TYPE,
+                RecipeTypes.SMELTING
         );
     }
 }
