@@ -4,6 +4,7 @@ import com.mojang.datafixers.kinds.App;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.narylr.narylrmod.tag.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -32,7 +33,7 @@ public record SteelFurnaceRecipe(
         ItemStack coalStack = input.getItem(1);
 
         return ingredient.test(inputStack)
-                && coalStack.is(Items.COAL)
+                && coalStack.is(ModTags.STEEL_CARBON_SOURCES)
                 && coalStack.getCount() >= coalCount;
     }
 

@@ -1,8 +1,8 @@
 package com.narylr.narylrmod.screen;
 
 import com.narylr.narylrmod.block.entity.SteelFurnaceBlockEntity;
-import com.narylr.narylrmod.item.ModItems;
 import com.narylr.narylrmod.recipe.ModRecipes;
+import com.narylr.narylrmod.tag.ModTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -12,7 +12,6 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
@@ -63,10 +62,9 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
         addSlot(new Slot(container, 1, 56, 53) {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
-                //允许输入煤炭
-                return itemStack.is(Items.COAL) || AbstractFurnaceBlockEntity.isFuel(itemStack);
+                return canPlaceFuel(itemStack);
             }
-        });   // 煤炭槽
+        });   // 燃料槽
         addSlot(new Slot(container, 2, 116, 35) {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
@@ -155,8 +153,8 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
                     if (!moveItemStackTo(stackInSlot, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                    //煤炭到煤炭槽
-                } else if (stackInSlot.is(Items.COAL) || AbstractFurnaceBlockEntity.isFuel(stackInSlot)) {
+                    //燃料到燃料槽
+                } else if (canPlaceFuel(stackInSlot)) {
                     if (!moveItemStackTo(stackInSlot, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -231,5 +229,11 @@ public class SteelFurnaceMenu extends AbstractContainerMenu {
         }
 
         return burnTime * flameHeight / maxBurnTime;
+    }
+
+    // 判断物品是否能放进钢熔炉的燃料/碳源槽
+    private boolean canPlaceFuel(ItemStack itemStack) {
+        return itemStack.is(ModTags.STEEL_CARBON_SOURCES)
+                || AbstractFurnaceBlockEntity.isFuel(itemStack);
     }
 }
