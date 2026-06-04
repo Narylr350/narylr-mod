@@ -9,6 +9,8 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
@@ -145,8 +147,26 @@ public class SteelFurnaceBlockEntity extends BlockEntity implements Container {
         burnTime = recipe.cookingTime();
         maxBurnTime = recipe.cookingTime();
 
+        playSteelStartSound();
+
         setChanged();
         return true;
+    }
+
+    // 播放钢熔炉开始炼钢时的重型点火声音
+    private void playSteelStartSound() {
+        if (level == null || level.isClientSide) {
+            return;
+        }
+
+        level.playSound(
+                null,
+                worldPosition,
+                SoundEvents.FIRECHARGE_USE,
+                SoundSource.BLOCKS,
+                0.8F,
+                0.65F
+        );
     }
 
     private SteelFurnaceRecipe findSteelRecipeWithCoal() {
