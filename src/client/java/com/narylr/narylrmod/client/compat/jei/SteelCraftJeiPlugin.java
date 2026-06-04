@@ -19,7 +19,8 @@ import com.narylr.narylrmod.client.screen.SteelFurnaceScreen;
 import java.util.List;
 
 public class SteelCraftJeiPlugin implements IModPlugin {
-    private static final ResourceLocation PLUGIN_ID = ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "jei_plugin");
+    private static final ResourceLocation PLUGIN_ID =
+            ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "jei_plugin");
 
     @Override
     public ResourceLocation getPluginUid() {

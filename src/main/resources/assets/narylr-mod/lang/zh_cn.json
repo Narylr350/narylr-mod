@@ -13,5 +13,7 @@
   "advancements.narylr-mod.steel_age.title": "钢铁时代",
   "advancements.narylr-mod.steel_age.description": "第一次获得钢锭",
 
-  "jei.narylr-mod.category.steel_furnace": "炼钢"
+  "jei.narylr-mod.category.steel_furnace": "炼钢",
+
+  "config.jade.plugin_narylr-mod.steel_furnace": "炼钢"
 }
