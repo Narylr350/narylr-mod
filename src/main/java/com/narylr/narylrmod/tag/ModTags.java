@@ -12,4 +12,9 @@ public class ModTags {
             Registries.ITEM,
             ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_carbon_sources")
     );
+    // 钢制工具物品
+    public static final TagKey<Item> STEEL_TOOLS = TagKey.create(
+            Registries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_tools")
+    );
 }

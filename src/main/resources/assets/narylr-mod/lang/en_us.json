@@ -10,6 +10,11 @@
   "item.narylr-mod.steel_shovel": "Steel Shovel",
   "item.narylr-mod.steel_hoe": "Steel Hoe",
 
+  "tooltip.narylr-mod.steel_tool.heavy": "Heavy: Slows movement when held in main hand",
+  "tooltip.narylr-mod.steel_tool.durable": "Durable: Higher durability than diamond tools",
+  "tooltip.narylr-mod.steel_ingot.heavy": "Heavy: Slows movement when held in main hand",
+  "tooltip.narylr-mod.steel_ingot.hard": "Hard: Increases attack damage when held in main hand",
+
   "block.narylr-mod.steel_block": "Steel Block",
   "block.narylr-mod.steel_furnace": "Steel Furnace",
 

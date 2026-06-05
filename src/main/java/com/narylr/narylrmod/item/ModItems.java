@@ -99,7 +99,7 @@ public class ModItems {
                     ModToolTiers.STEEL,
                     new Properties().attributes(
                             SteelToolAttributes.addHeavyMainHandModifier(
-                                    HoeItem.createAttributes(ModToolTiers.STEEL, -3.0F, 0.0F),
+                                    HoeItem.createAttributes(ModToolTiers.STEEL, -1.0F, 0.0F),
                                     "steel_hoe"
                             )
                     )

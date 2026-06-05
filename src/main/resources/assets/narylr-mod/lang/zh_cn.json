@@ -10,6 +10,11 @@
   "item.narylr-mod.steel_shovel": "钢锹",
   "item.narylr-mod.steel_hoe": "钢锄",
 
+  "tooltip.narylr-mod.steel_tool.heavy": "沉重：主手持有时移动速度降低",
+  "tooltip.narylr-mod.steel_tool.durable": "坚韧：耐久高于钻石工具",
+  "tooltip.narylr-mod.steel_ingot.heavy": "沉重：主手持有时移动速度降低",
+  "tooltip.narylr-mod.steel_ingot.hard": "坚硬：主手持有时攻击伤害提高",
+
   "block.narylr-mod.steel_block": "钢块",
   "block.narylr-mod.steel_furnace": "钢熔炉",
 
