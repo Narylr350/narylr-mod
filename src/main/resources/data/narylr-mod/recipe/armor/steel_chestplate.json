@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S S",
+    "SSS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "narylr-mod:steel_ingot"
+    }
+  },
+  "result": {
+    "id": "narylr-mod:steel_chestplate",
+    "count": 1
+  }
+}

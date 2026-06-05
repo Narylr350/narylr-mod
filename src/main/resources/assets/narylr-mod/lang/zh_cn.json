@@ -9,6 +9,10 @@
   "item.narylr-mod.steel_axe": "钢斧",
   "item.narylr-mod.steel_shovel": "钢锹",
   "item.narylr-mod.steel_hoe": "钢锄",
+  "item.narylr-mod.steel_helmet": "钢头盔",
+  "item.narylr-mod.steel_chestplate": "钢胸甲",
+  "item.narylr-mod.steel_leggings": "钢护腿",
+  "item.narylr-mod.steel_boots": "钢靴子",
 
   "tooltip.narylr-mod.steel_tool.heavy": "沉重：主手持有时移动速度降低",
   "tooltip.narylr-mod.steel_tool.durable": "坚韧：耐久高于钻石工具",

@@ -21,10 +21,10 @@ public class ModToolTiers {
             return 1800;
         }
 
-        // 钢工具挖掘速度，低于钻石的 8.0
+        // 钢工具基础挖掘速度，略高于钻石，但持有时会因沉重而减速
         @Override
         public float getSpeed() {
-            return 7.0F;
+            return 8.5F;
         }
 
         // 钢工具基础攻击加成，和钻石同级

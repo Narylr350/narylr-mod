@@ -5,6 +5,7 @@ import com.narylr.narylrmod.block.ModBlocks;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.HoeItem;
@@ -103,6 +104,42 @@ public class ModItems {
                                     "steel_hoe"
                             )
                     )
+            )
+    );
+    public static final Item STEEL_HELMET = Registry.register(
+            BuiltInRegistries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_helmet"),
+            new ArmorItem(
+                    ModArmorMaterials.STEEL,
+                    ArmorItem.Type.HELMET,
+                    new Properties().durability(ArmorItem.Type.HELMET.getDurability(37))
+            )
+    );
+    public static final Item STEEL_CHESTPLATE = Registry.register(
+            BuiltInRegistries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_chestplate"),
+            new ArmorItem(
+                    ModArmorMaterials.STEEL,
+                    ArmorItem.Type.CHESTPLATE,
+                    new Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(37))
+            )
+    );
+    public static final Item STEEL_LEGGINGS = Registry.register(
+            BuiltInRegistries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_leggings"),
+            new ArmorItem(
+                    ModArmorMaterials.STEEL,
+                    ArmorItem.Type.LEGGINGS,
+                    new Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(37))
+            )
+    );
+    public static final Item STEEL_BOOTS = Registry.register(
+            BuiltInRegistries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_boots"),
+            new ArmorItem(
+                    ModArmorMaterials.STEEL,
+                    ArmorItem.Type.BOOTS,
+                    new Properties().durability(ArmorItem.Type.BOOTS.getDurability(37))
             )
     );
 

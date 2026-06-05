@@ -9,6 +9,10 @@
   "item.narylr-mod.steel_axe": "Steel Axe",
   "item.narylr-mod.steel_shovel": "Steel Shovel",
   "item.narylr-mod.steel_hoe": "Steel Hoe",
+  "item.narylr-mod.steel_helmet": "Steel Helmet",
+  "item.narylr-mod.steel_chestplate": "Steel Chestplate",
+  "item.narylr-mod.steel_leggings": "Steel Leggings",
+  "item.narylr-mod.steel_boots": "Steel Boots",
 
   "tooltip.narylr-mod.steel_tool.heavy": "Heavy: Slows movement when held in main hand",
   "tooltip.narylr-mod.steel_tool.durable": "Durable: Higher durability than diamond tools",

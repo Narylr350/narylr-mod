@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S S",
+    "S S"
+  ],
+  "key": {
+    "S": {
+      "item": "narylr-mod:steel_ingot"
+    }
+  },
+  "result": {
+    "id": "narylr-mod:steel_boots",
+    "count": 1
+  }
+}

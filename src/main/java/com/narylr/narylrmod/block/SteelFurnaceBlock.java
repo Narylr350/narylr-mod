@@ -69,8 +69,7 @@ public class SteelFurnaceBlock extends BaseEntityBlock {
     //玩家放置时，让正面朝向玩家
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
-        return defaultBlockState()
-                .setValue(FACING, blockPlaceContext.getHorizontalDirection().getOpposite());
+        return defaultBlockState().setValue(FACING, blockPlaceContext.getHorizontalDirection().getOpposite());
     }
 
     //右键打开gui
@@ -86,12 +85,7 @@ public class SteelFurnaceBlock extends BaseEntityBlock {
             BlockEntity blockEntity = level.getBlockEntity(pos);
 
             if (blockEntity instanceof SteelFurnaceBlockEntity steelFurnaceBlockEntity) {
-                player.openMenu(new SimpleMenuProvider(new MenuConstructor() {
-                    @Override
-                    public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-                        return new SteelFurnaceMenu(containerId, playerInventory, steelFurnaceBlockEntity);
-                    }
-                }, Component.translatable("container.narylr-mod.steel_furnace")));
+                player.openMenu(new SimpleMenuProvider((containerId, playerInventory, player1) -> new SteelFurnaceMenu(containerId, playerInventory, steelFurnaceBlockEntity), Component.translatable("container.narylr-mod.steel_furnace")));
             }
         }
         return InteractionResult.SUCCESS;
