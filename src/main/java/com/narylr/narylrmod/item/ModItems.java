@@ -148,13 +148,7 @@ public class ModItems {
                     new Properties().durability(ArmorItem.Type.BOOTS.getDurability(37))
             )
     );
-
-    public static void registerModItems() {
-        NarylrMod.LOGGER.info("注册物品");
-    }
-
-
-    //下界合金钢件
+    //下界合金钢剑
     public static final Item STEEL_NETHER_SWORD = Registry.register(
             BuiltInRegistries.ITEM,
             ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_nether_sword"),
@@ -168,6 +162,7 @@ public class ModItems {
                     )
             )
     );
+    //下界合金钢镐
     public static final Item STEEL_NETHER_PICKAXE = Registry.register(
             BuiltInRegistries.ITEM,
             ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_nether_pickaxe"),
@@ -181,7 +176,7 @@ public class ModItems {
                     )
             )
     );
-    //钢平底锅
+    // 钢平底锅：钢锭系重武器，伤害高于钢剑，但攻速更慢
     public static final Item STEEL_FRYING_PAN= Registry.register(
             BuiltInRegistries.ITEM,
             ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_frying_pan"),
@@ -189,13 +184,13 @@ public class ModItems {
                     ModToolTiers.STEEL,
                     new Properties().attributes(
                             HeavyItemAttributes.addspeed(
-                                    SwordItem.createAttributes(ModToolTiers.STEEL, 9, -2.6F),
+                                    SwordItem.createAttributes(ModToolTiers.STEEL, 5, -2.8F),
                                     "steel_frying_pan"
                             )
                     )
             )
     );
-    //狼牙棒
+    // 狼牙棒：钢块系重武器，伤害更高，但主手持有减速 30%，攻速也更慢
     public static final Item STEEL_MORNING_STAR = Registry.register(
             BuiltInRegistries.ITEM,
             ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_morning_star"),
@@ -203,10 +198,14 @@ public class ModItems {
                     ModToolTiers.STEEL,
                     new Properties().attributes(
                             HeavyItemAttributes.addSteelBlockToolModifier(
-                                    SwordItem.createAttributes(ModToolTiers.STEEL, 4, -2.6F),
+                                    SwordItem.createAttributes(ModToolTiers.STEEL, 8, -3.4F),
                                     "steel_morning_star"
                             )
                     )
             )
     );
+
+    public static void registerModItems() {
+        NarylrMod.LOGGER.info("注册物品");
+    }
 }
