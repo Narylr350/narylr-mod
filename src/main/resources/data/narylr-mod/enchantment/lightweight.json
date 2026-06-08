@@ -1,0 +1,22 @@
+{
+  "description": {
+    "translate": "enchantment.narylr-mod.lightweight"
+  },
+  "supported_items": "#narylr-mod:enchantable/heavy_items",
+  "primary_items": "#narylr-mod:enchantable/heavy_items",
+  "weight": 5,
+  "max_level": 3,
+  "min_cost": {
+    "base": 10,
+    "per_level_above_first": 15
+  },
+  "max_cost": {
+    "base": 40,
+    "per_level_above_first": 15
+  },
+  "anvil_cost": 4,
+  "slots": [
+    "mainhand"
+  ],
+  "effects": {}
+}
