@@ -161,7 +161,7 @@ public class ModItems {
             new SwordItem(
                     ModToolTiers.STEEL,
                     new Properties().attributes(
-                            SteelToolAttributes.addHeavyMainHandModifier(
+                            HeavyItemAttributes.addSteelIngotToolModifier(
                                     SwordItem.createAttributes(ModToolTiers.STEEL, 4, -2.6F),
                                     "steel_nether_sword"
                             )
@@ -174,7 +174,7 @@ public class ModItems {
             new PickaxeItem(
                     ModToolTiers.STEEL,
                     new Properties().attributes(
-                            SteelToolAttributes.addHeavyMainHandModifier(
+                            HeavyItemAttributes.addSteelIngotToolModifier(
                                     PickaxeItem.createAttributes(ModToolTiers.STEEL, 1.0F, -3.0F),
                                     "steel_nether_pickaxe"
                             )
@@ -188,7 +188,7 @@ public class ModItems {
             new SwordItem(
                     ModToolTiers.STEEL,
                     new Properties().attributes(
-                            SteelToolAttributes.addQuicklyMainHandModifier(
+                            HeavyItemAttributes.addspeed(
                                     SwordItem.createAttributes(ModToolTiers.STEEL, 9, -2.6F),
                                     "steel_frying_pan"
                             )
@@ -202,7 +202,7 @@ public class ModItems {
             new SwordItem(
                     ModToolTiers.STEEL,
                     new Properties().attributes(
-                            SteelToolAttributes.addHeavyMainHandModifier(
+                            HeavyItemAttributes.addSteelBlockToolModifier(
                                     SwordItem.createAttributes(ModToolTiers.STEEL, 4, -2.6F),
                                     "steel_morning_star"
                             )
