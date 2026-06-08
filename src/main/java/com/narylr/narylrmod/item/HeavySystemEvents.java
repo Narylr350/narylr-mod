@@ -8,9 +8,11 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -37,16 +39,47 @@ public class HeavySystemEvents {
         applyMovementSpeedPenalty(player, penalty);
     }
 
-    // 计算最终沉重减速
-    // v1 只计算主手物品
-    // 后续钢盔甲减速、多个来源取最大值、轻盈附魔抵消都可以从这里扩展
+    // 计算钢甲沉重减速
+    // 钢甲内部按部位累加：头盔 2%，胸甲 5%，护腿 5%，靴子 3%，满套 15%
     private static double calculateFinalHeavyPenalty(ServerPlayer player) {
         ItemStack mainHandStack = player.getMainHandItem();
 
         double mainHandPenalty = HeavyItemHelper.getBaseHeavyPenalty(mainHandStack);
         mainHandPenalty = applyLightweightReduction(player, mainHandStack, mainHandPenalty);
 
-        return mainHandPenalty;
+        double armorPenalty = calculateSteelArmorPenalty(player);
+
+        return Math.max(mainHandPenalty, armorPenalty);
+    }
+
+    // 计算钢甲沉重减速
+    // 钢甲内部按部位累加：头盔 2%，胸甲 5%，护腿 5%，靴子 3%，满套 15%
+    private static double calculateSteelArmorPenalty(ServerPlayer player) {
+        double penalty = 0.0D;
+
+        if (isItemInSlot(player, EquipmentSlot.HEAD, ModItems.STEEL_HELMET)) {
+            penalty += HeavyItemAttributes.STEEL_HELMET_HEAVY_PENALTY;
+        }
+
+        if (isItemInSlot(player, EquipmentSlot.CHEST, ModItems.STEEL_CHESTPLATE)) {
+            penalty += HeavyItemAttributes.STEEL_CHESTPLATE_HEAVY_PENALTY;
+        }
+
+        if (isItemInSlot(player, EquipmentSlot.LEGS, ModItems.STEEL_LEGGINGS)) {
+            penalty += HeavyItemAttributes.STEEL_LEGGINGS_HEAVY_PENALTY;
+        }
+
+        if (isItemInSlot(player, EquipmentSlot.FEET, ModItems.STEEL_BOOTS)) {
+            penalty += HeavyItemAttributes.STEEL_BOOTS_HEAVY_PENALTY;
+        }
+
+        return Math.min(penalty, HeavyItemAttributes.FULL_STEEL_ARMOR_HEAVY_PENALTY);
+    }
+
+    // 判断玩家指定装备槽是否穿着指定物品
+    private static boolean isItemInSlot(ServerPlayer player, EquipmentSlot slot, Item item) {
+        ItemStack stack = player.getItemBySlot(slot);
+        return !stack.isEmpty() && stack.is(item);
     }
 
     // 轻盈附魔抵消沉重减速

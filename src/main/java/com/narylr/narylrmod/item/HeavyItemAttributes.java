@@ -14,6 +14,21 @@ public class HeavyItemAttributes {
     // 钢块系沉重减速：主手持有时移动速度降低 30%
     public static final double STEEL_BLOCK_HEAVY_PENALTY = 0.30D;
 
+    // 钢甲头盔沉重减速：2%
+    public static final double STEEL_HELMET_HEAVY_PENALTY = 0.02D;
+
+    // 钢甲胸甲沉重减速：5%
+    public static final double STEEL_CHESTPLATE_HEAVY_PENALTY = 0.05D;
+
+    // 钢甲护腿沉重减速：5%
+    public static final double STEEL_LEGGINGS_HEAVY_PENALTY = 0.05D;
+
+    // 钢甲靴子沉重减速：3%
+    public static final double STEEL_BOOTS_HEAVY_PENALTY = 0.03D;
+
+    // 满套钢甲最大沉重减速：15%
+    public static final double FULL_STEEL_ARMOR_HEAVY_PENALTY = 0.15D;
+
     // 钢锭本体主手攻击加成
     public static final double STEEL_INGOT_ATTACK_DAMAGE_BONUS = 2.0D;
 
