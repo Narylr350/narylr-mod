@@ -1,6 +1,7 @@
-package com.narylr.narylrmod.item;
+package com.narylr.narylrmod.item.armor;
 
 import com.narylr.narylrmod.NarylrMod;
+import com.narylr.narylrmod.item.ModItems;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;

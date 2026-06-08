@@ -1,4 +1,4 @@
-package com.narylr.narylrmod.item;
+package com.narylr.narylrmod.item.weapon;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SwordItem;

@@ -1,5 +1,6 @@
-package com.narylr.narylrmod.item;
+package com.narylr.narylrmod.item.material;
 
+import com.narylr.narylrmod.item.HeavyItemAttributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 

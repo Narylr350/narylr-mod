@@ -2,6 +2,12 @@ package com.narylr.narylrmod.item;
 
 import com.narylr.narylrmod.NarylrMod;
 import com.narylr.narylrmod.block.ModBlocks;
+import com.narylr.narylrmod.item.armor.ModArmorMaterials;
+import com.narylr.narylrmod.item.material.SteelBlockItem;
+import com.narylr.narylrmod.item.material.SteelIngotItem;
+import com.narylr.narylrmod.item.tool.ModToolTiers;
+import com.narylr.narylrmod.item.weapon.SteelFryingPanItem;
+import com.narylr.narylrmod.item.weapon.SteelMorningStarItem;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
