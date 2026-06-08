@@ -180,10 +180,10 @@ public class ModItems {
     public static final Item STEEL_FRYING_PAN= Registry.register(
             BuiltInRegistries.ITEM,
             ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_frying_pan"),
-            new SwordItem(
+            new SteelFryingPanItem(
                     ModToolTiers.STEEL,
                     new Properties().attributes(
-                            HeavyItemAttributes.addspeed(
+                            HeavyItemAttributes.addSteelIngotToolModifier(
                                     SwordItem.createAttributes(ModToolTiers.STEEL, 5, -2.8F),
                                     "steel_frying_pan"
                             )
@@ -194,7 +194,7 @@ public class ModItems {
     public static final Item STEEL_MORNING_STAR = Registry.register(
             BuiltInRegistries.ITEM,
             ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_morning_star"),
-            new SwordItem(
+            new SteelMorningStarItem(
                     ModToolTiers.STEEL,
                     new Properties().attributes(
                             HeavyItemAttributes.addSteelBlockToolModifier(
