@@ -18,10 +18,12 @@
   "item.narylr-mod.steel_nether_sword": "下界合金钢剑",
   "item.narylr-mod.steel_nether_pickaxe": "下界合金钢镐",
 
-  "tooltip.narylr-mod.steel_tool.heavy": "沉重：主手持有时移动速度降低",
+  "tooltip.narylr-mod.heavy_item.heavy": "沉重：主手持有时移动速度降低 %s%%",
+  "tooltip.narylr-mod.steel_armor.heavy": "沉重：穿戴时提供 %s%% 钢甲沉重",
   "tooltip.narylr-mod.steel_tool.durable": "坚韧：耐久高于钻石工具",
-  "tooltip.narylr-mod.steel_ingot.heavy": "沉重：主手持有时移动速度降低",
-  "tooltip.narylr-mod.steel_ingot.hard": "坚硬：主手持有时攻击伤害提高",
+  "tooltip.narylr-mod.steel_armor.durable": "坚韧：耐久高于钻石盔甲",
+  "tooltip.narylr-mod.steel_material.hard": "坚硬：主手持有时攻击伤害提高",
+  "tooltip.narylr-mod.steel_armor.rule": "钢甲沉重与主手沉重取较大值",
 
   "block.narylr-mod.steel_block": "钢块",
   "block.narylr-mod.steel_furnace": "钢熔炉",

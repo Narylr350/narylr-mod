@@ -65,7 +65,6 @@ public class ModItems {
                     )
             )
     );
-
     public static final Item STEEL_PICKAXE = Registry.register(
             BuiltInRegistries.ITEM,
             ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_pickaxe"),
