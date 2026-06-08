@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "narylr-mod:steel_ingot",
+    "narylr-mod:steel_block",
+    "narylr-mod:steel_sword",
+    "narylr-mod:steel_pickaxe",
+    "narylr-mod:steel_axe",
+    "narylr-mod:steel_shovel",
+    "narylr-mod:steel_hoe",
+    "narylr-mod:steel_nether_sword",
+    "narylr-mod:steel_nether_pickaxe",
+    "narylr-mod:steel_frying_pan",
+    "narylr-mod:steel_morning_star"
+  ]
+}

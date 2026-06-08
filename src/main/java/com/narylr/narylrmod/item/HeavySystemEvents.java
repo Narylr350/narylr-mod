@@ -1,13 +1,19 @@
 package com.narylr.narylrmod.item;
 
 import com.narylr.narylrmod.NarylrMod;
+import com.narylr.narylrmod.enchantment.ModEnchantments;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 // 沉重系统事件：统一处理玩家身上的沉重减速
 public class HeavySystemEvents {
@@ -38,15 +44,39 @@ public class HeavySystemEvents {
         ItemStack mainHandStack = player.getMainHandItem();
 
         double mainHandPenalty = HeavyItemHelper.getBaseHeavyPenalty(mainHandStack);
-        mainHandPenalty = applyLightweightReduction(mainHandStack, mainHandPenalty);
+        mainHandPenalty = applyLightweightReduction(player, mainHandStack, mainHandPenalty);
 
         return mainHandPenalty;
     }
 
-    // 预留：轻盈附魔抵消沉重减速
-    // v1 暂时不实现轻盈，所以直接返回原始减速
-    private static double applyLightweightReduction(ItemStack stack, double penalty) {
-        return penalty;
+    // 轻盈附魔抵消沉重减速
+    // 轻盈 I 抵消 1/3，轻盈 II 抵消 2/3，轻盈 III 完全抵消
+    private static double applyLightweightReduction(ServerPlayer player, ItemStack stack, double penalty) {
+        if (penalty <= 0.0D || stack.isEmpty()) {
+            return penalty;
+        }
+
+        int lightweightLevel = getLightweightLevel(player, stack);
+
+        if (lightweightLevel <= 0) {
+            return penalty;
+        }
+
+        int clampedLevel = Math.min(lightweightLevel, 3);
+        double reductionRate = clampedLevel / 3.0D;
+
+        return penalty * (1.0D - reductionRate);
+    }
+
+    // 获取物品上的轻盈附魔等级
+    private static int getLightweightLevel(ServerPlayer player, ItemStack stack) {
+        Registry<Enchantment> enchantmentRegistry = player.registryAccess().registryOrThrow(Registries.ENCHANTMENT);
+
+        Holder.Reference<Enchantment> lightweight = enchantmentRegistry.getHolderOrThrow(
+                ModEnchantments.LIGHTWEIGHT
+        );
+
+        return EnchantmentHelper.getItemEnchantmentLevel(lightweight, stack);
     }
 
     // 给玩家添加或移除统一移动速度 modifier
