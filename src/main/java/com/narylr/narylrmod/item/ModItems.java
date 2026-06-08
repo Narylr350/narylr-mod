@@ -31,7 +31,10 @@ public class ModItems {
     public static final Item STEEL_BLOCK_ITEM = Registry.register(
             BuiltInRegistries.ITEM,
             ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_block"),
-            new BlockItem(ModBlocks.STEEL_BLOCK,new Properties())
+            new SteelBlockItem(
+                    ModBlocks.STEEL_BLOCK,
+                    new Properties().attributes(SteelBlockItem.createSteelBlockAttributes())
+            )
     );
     public static final Item RAW_STEEL = Registry.register(
             BuiltInRegistries.ITEM,
@@ -49,7 +52,7 @@ public class ModItems {
             new SwordItem(
                     ModToolTiers.STEEL,
                     new Properties().attributes(
-                            SteelToolAttributes.addHeavyMainHandModifier(
+                            HeavyItemAttributes.addSteelIngotToolModifier(
                                     SwordItem.createAttributes(ModToolTiers.STEEL, 4, -2.6F),
                                     "steel_sword"
                             )
@@ -63,7 +66,7 @@ public class ModItems {
             new PickaxeItem(
                     ModToolTiers.STEEL,
                     new Properties().attributes(
-                            SteelToolAttributes.addHeavyMainHandModifier(
+                            HeavyItemAttributes.addSteelIngotToolModifier(
                                     PickaxeItem.createAttributes(ModToolTiers.STEEL, 1.0F, -3.0F),
                                     "steel_pickaxe"
                             )
@@ -76,7 +79,7 @@ public class ModItems {
             new AxeItem(
                     ModToolTiers.STEEL,
                     new Properties().attributes(
-                            SteelToolAttributes.addHeavyMainHandModifier(
+                            HeavyItemAttributes.addSteelIngotToolModifier(
                                     AxeItem.createAttributes(ModToolTiers.STEEL, 6.0F, -3.2F),
                                     "steel_axe"
                             )
@@ -89,7 +92,7 @@ public class ModItems {
             new ShovelItem(
                     ModToolTiers.STEEL,
                     new Properties().attributes(
-                            SteelToolAttributes.addHeavyMainHandModifier(
+                            HeavyItemAttributes.addSteelIngotToolModifier(
                                     ShovelItem.createAttributes(ModToolTiers.STEEL, 1.5F, -3.0F),
                                     "steel_shovel"
                             )
@@ -102,7 +105,7 @@ public class ModItems {
             new HoeItem(
                     ModToolTiers.STEEL,
                     new Properties().attributes(
-                            SteelToolAttributes.addHeavyMainHandModifier(
+                            HeavyItemAttributes.addSteelIngotToolModifier(
                                     HoeItem.createAttributes(ModToolTiers.STEEL, -1.0F, 0.0F),
                                     "steel_hoe"
                             )
