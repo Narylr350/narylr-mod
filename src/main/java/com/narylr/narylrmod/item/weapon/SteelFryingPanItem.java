@@ -1,15 +1,24 @@
 package com.narylr.narylrmod.item.weapon;
 
+import com.narylr.narylrmod.item.HeavyItem;
+import com.narylr.narylrmod.item.HeavyItemAttributes;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 
-public class SteelFryingPanItem extends SwordItem {
+public class SteelFryingPanItem extends SwordItem implements HeavyItem {
     // 钢平底锅未来的暴击概率，先预留为 100%
     private static final float CRITICAL_CHANCE = 1.0F;
 
     public SteelFryingPanItem(Tier tier, Item.Properties properties) {
         super(tier, properties);
+    }
+
+    // 钢平底锅属于钢锭系重武器，基础减速 15%
+    @Override
+    public double getHeavyPenalty(ItemStack stack) {
+        return HeavyItemAttributes.STEEL_INGOT_HEAVY_PENALTY;
     }
 
     // 预留：以后在攻击实体时调用，用来判断是否触发暴击
