@@ -1,5 +1,6 @@
-package com.narylr.narylrmod.item;
+package com.narylr.narylrmod.item.material;
 
+import com.narylr.narylrmod.item.HeavyItemAttributes;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.block.Block;

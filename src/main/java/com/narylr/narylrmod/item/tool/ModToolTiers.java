@@ -1,5 +1,6 @@
-package com.narylr.narylrmod.item;
+package com.narylr.narylrmod.item.tool;
 
+import com.narylr.narylrmod.item.ModItems;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Tier;
