@@ -11,6 +11,8 @@ out/
 classes/
 .github/
 
+model材质包
+
 # eclipse
 
 *.launch

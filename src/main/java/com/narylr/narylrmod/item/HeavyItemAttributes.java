@@ -61,6 +61,10 @@ public class HeavyItemAttributes {
     public static ItemAttributeModifiers addSteelBlockToolModifier(ItemAttributeModifiers modifiers, String name) {
         return addHeavyMainHandModifier(modifiers, name, STEEL_BLOCK_HEAVY_PENALTY);
     }
+    // 给钢块系工具测试加速
+    public static ItemAttributeModifiers addspeed(ItemAttributeModifiers modifiers, String name) {
+        return addHeavyMainHandModifier(modifiers, name, -1d);
+    }
 
     // 底层通用方法：给主手物品添加移动速度惩罚
     private static ItemAttributeModifiers addHeavyMainHandModifier(

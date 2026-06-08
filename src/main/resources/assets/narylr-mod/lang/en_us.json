@@ -19,6 +19,13 @@
   "tooltip.narylr-mod.steel_ingot.heavy": "Heavy: Slows movement when held in main hand",
   "tooltip.narylr-mod.steel_ingot.hard": "Hard: Increases attack damage when held in main hand",
 
+
+  "item.narylr-mod.steel_nether_sword": "Steel Nether Sword",
+  "item.narylr-mod.steel_nether_pickaxe": "steel Nether Pickaxe",
+
+  "item.narylr-mod.steel_frying_pan": "Steel frying pan",
+  "item.narylr-mod.steel_morning_star": "Steel morning star",
+
   "block.narylr-mod.steel_block": "Steel Block",
   "block.narylr-mod.steel_furnace": "Steel Furnace",
 
