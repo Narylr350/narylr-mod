@@ -20,7 +20,8 @@ public class HeavyItemAttributes {
     // 钢块本体主手攻击加成，定位为比钢锭更重、更痛
     public static final double STEEL_BLOCK_ATTACK_DAMAGE_BONUS = 4.0D;
 
-    // 创建钢锭本体属性：攻击 +2，移动速度 -15%
+    // 创建钢锭本体属性：只保留攻击 +2
+    // 移动速度减速交给 HeavySystemEvents 统一处理
     public static ItemAttributeModifiers createSteelIngotAttributes() {
         return ItemAttributeModifiers.builder()
                 .add(
@@ -28,15 +29,11 @@ public class HeavyItemAttributes {
                         createModifier("steel_ingot_attack_damage", STEEL_INGOT_ATTACK_DAMAGE_BONUS, AttributeModifier.Operation.ADD_VALUE),
                         EquipmentSlotGroup.MAINHAND
                 )
-                .add(
-                        Attributes.MOVEMENT_SPEED,
-                        createModifier("steel_ingot_movement_speed", -STEEL_INGOT_HEAVY_PENALTY, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL),
-                        EquipmentSlotGroup.MAINHAND
-                )
                 .build();
     }
 
-    // 创建钢块本体属性：攻击 +4，移动速度 -30%
+    // 创建钢块本体属性：只保留攻击 +4
+    // 移动速度减速交给 HeavySystemEvents 统一处理
     public static ItemAttributeModifiers createSteelBlockAttributes() {
         return ItemAttributeModifiers.builder()
                 .add(
@@ -44,35 +41,19 @@ public class HeavyItemAttributes {
                         createModifier("steel_block_attack_damage", STEEL_BLOCK_ATTACK_DAMAGE_BONUS, AttributeModifier.Operation.ADD_VALUE),
                         EquipmentSlotGroup.MAINHAND
                 )
-                .add(
-                        Attributes.MOVEMENT_SPEED,
-                        createModifier("steel_block_movement_speed", -STEEL_BLOCK_HEAVY_PENALTY, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL),
-                        EquipmentSlotGroup.MAINHAND
-                )
                 .build();
     }
 
-    // 给钢锭系工具添加主手沉重属性
+    // 钢锭系工具暂时不再往物品属性里直接添加移动速度 modifier
+    // 工具是否沉重由 HeavyItemHelper 识别，实际减速由 HeavySystemEvents 统一处理
     public static ItemAttributeModifiers addSteelIngotToolModifier(ItemAttributeModifiers modifiers, String name) {
-        return addHeavyMainHandModifier(modifiers, name, STEEL_INGOT_HEAVY_PENALTY);
+        return modifiers;
     }
 
-    // 给钢块系工具添加主手沉重属性，后续钢块狼牙棒 / 钢块工具使用
+    // 钢块系工具暂时不再往物品属性里直接添加移动速度 modifier
+    // 工具是否沉重由 HeavyItemHelper 识别，实际减速由 HeavySystemEvents 统一处理
     public static ItemAttributeModifiers addSteelBlockToolModifier(ItemAttributeModifiers modifiers, String name) {
-        return addHeavyMainHandModifier(modifiers, name, STEEL_BLOCK_HEAVY_PENALTY);
-    }
-
-    // 底层通用方法：给主手物品添加移动速度惩罚
-    private static ItemAttributeModifiers addHeavyMainHandModifier(
-            ItemAttributeModifiers modifiers,
-            String name,
-            double penalty
-    ) {
-        return modifiers.withModifierAdded(
-                Attributes.MOVEMENT_SPEED,
-                createModifier(name + "_movement_speed", -penalty, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL),
-                EquipmentSlotGroup.MAINHAND
-        );
+        return modifiers;
     }
 
     // 创建属性修饰器，统一生成命名空间 id，避免每个类重复写 ResourceLocation
@@ -86,5 +67,9 @@ public class HeavyItemAttributes {
                 amount,
                 operation
         );
+    }
+
+    private HeavyItemAttributes() {
+        // 工具类不需要创建对象
     }
 }
