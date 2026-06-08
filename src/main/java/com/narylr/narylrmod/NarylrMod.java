@@ -2,6 +2,7 @@ package com.narylr.narylrmod;
 
 import com.narylr.narylrmod.block.ModBlocks;
 import com.narylr.narylrmod.block.entity.ModBlockEntities;
+import com.narylr.narylrmod.item.HeavySystemEvents;
 import com.narylr.narylrmod.item.ModItemGroup;
 import com.narylr.narylrmod.item.ModItems;
 import com.narylr.narylrmod.recipe.ModRecipes;
@@ -31,6 +32,7 @@ public class NarylrMod implements ModInitializer {
 		ModBlockEntities.registerBlockEntities();
 		ModRecipes.registerRecipes();
 		ModMenus.registerMenus();
+		HeavySystemEvents.registerEvents();
 		ModItemGroup.registerItemGroups();
 	}
 }
