@@ -23,4 +23,16 @@ public class SteelToolAttributes {
                 EquipmentSlotGroup.MAINHAND
         );
     }
+    //添加移速
+    public static ItemAttributeModifiers addQuicklyMainHandModifier(ItemAttributeModifiers modifiers, String name) {
+        return modifiers.withModifierAdded(
+                Attributes.MOVEMENT_SPEED,
+                new AttributeModifier(
+                        ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, name + "_movement_speed"),
+                        10D,
+                        AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
+                ),
+                EquipmentSlotGroup.MAINHAND
+        );
+    }
 }

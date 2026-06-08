@@ -19,6 +19,11 @@
   "tooltip.narylr-mod.steel_ingot.heavy": "沉重：主手持有时移动速度降低",
   "tooltip.narylr-mod.steel_ingot.hard": "坚硬：主手持有时攻击伤害提高",
 
+  "item.narylr-mod.steel_netherite_sword": "下界合金钢剑",
+
+  "item.narylr-mod.steel_frying_pan": "钢平底锅",
+  "item.narylr-mod.steel_morning_star": "钢狼牙棒",
+
   "block.narylr-mod.steel_block": "钢块",
   "block.narylr-mod.steel_furnace": "钢熔炉",
 

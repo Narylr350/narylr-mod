@@ -15,6 +15,8 @@ import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.SwordItem;
 
+
+//注册工具
 public class ModItems {
     public static final Item STEEL_INGOT = Registry.register(
             BuiltInRegistries.ITEM,
@@ -54,6 +56,7 @@ public class ModItems {
                     )
             )
     );
+
     public static final Item STEEL_PICKAXE = Registry.register(
             BuiltInRegistries.ITEM,
             ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_pickaxe"),
@@ -146,4 +149,61 @@ public class ModItems {
     public static void registerModItems() {
         NarylrMod.LOGGER.info("注册物品");
     }
+
+
+    //下界合金钢件
+    public static final Item STEEL_NETHER_SWORD = Registry.register(
+            BuiltInRegistries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_nether_sword"),
+            new SwordItem(
+                    ModToolTiers.STEEL,
+                    new Properties().attributes(
+                            SteelToolAttributes.addHeavyMainHandModifier(
+                                    SwordItem.createAttributes(ModToolTiers.STEEL, 4, -2.6F),
+                                    "steel_nether_sword"
+                            )
+                    )
+            )
+    );
+    public static final Item STEEL_NETHER_PICKAXE = Registry.register(
+            BuiltInRegistries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_nether_pickaxe"),
+            new PickaxeItem(
+                    ModToolTiers.STEEL,
+                    new Properties().attributes(
+                            SteelToolAttributes.addHeavyMainHandModifier(
+                                    PickaxeItem.createAttributes(ModToolTiers.STEEL, 1.0F, -3.0F),
+                                    "steel_nether_pickaxe"
+                            )
+                    )
+            )
+    );
+    //钢平底锅
+    public static final Item STEEL_FRYING_PAN= Registry.register(
+            BuiltInRegistries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_frying_pan"),
+            new SwordItem(
+                    ModToolTiers.STEEL,
+                    new Properties().attributes(
+                            SteelToolAttributes.addQuicklyMainHandModifier(
+                                    SwordItem.createAttributes(ModToolTiers.STEEL, 9, -2.6F),
+                                    "steel_frying_pan"
+                            )
+                    )
+            )
+    );
+    //狼牙棒
+    public static final Item STEEL_MORNING_STAR = Registry.register(
+            BuiltInRegistries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_morning_star"),
+            new SwordItem(
+                    ModToolTiers.STEEL,
+                    new Properties().attributes(
+                            SteelToolAttributes.addHeavyMainHandModifier(
+                                    SwordItem.createAttributes(ModToolTiers.STEEL, 4, -2.6F),
+                                    "steel_morning_star"
+                            )
+                    )
+            )
+    );
 }
