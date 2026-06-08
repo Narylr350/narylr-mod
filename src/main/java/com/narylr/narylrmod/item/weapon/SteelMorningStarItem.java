@@ -1,10 +1,13 @@
 package com.narylr.narylrmod.item.weapon;
 
+import com.narylr.narylrmod.item.HeavyItem;
+import com.narylr.narylrmod.item.HeavyItemAttributes;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 
-public class SteelMorningStarItem extends SwordItem {
+public class SteelMorningStarItem extends SwordItem implements HeavyItem {
     // 钢狼牙棒未来的流血持续时间，单位可以先按 tick 理解，20 tick = 1 秒
     private static final int BLEED_DURATION_TICKS = 100;
 
@@ -13,6 +16,12 @@ public class SteelMorningStarItem extends SwordItem {
 
     public SteelMorningStarItem(Tier tier, Item.Properties properties) {
         super(tier, properties);
+    }
+
+    // 钢狼牙棒属于钢块系重武器，基础减速 30%
+    @Override
+    public double getHeavyPenalty(ItemStack stack) {
+        return HeavyItemAttributes.STEEL_BLOCK_HEAVY_PENALTY;
     }
 
     // 预留：以后在攻击实体时调用，用来判断是否可以触发流血
