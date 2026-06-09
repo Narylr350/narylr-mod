@@ -209,6 +209,11 @@ public class ModItems {
                     )
             )
     );
+    public static final Item STEEL_NETHER_INGOT = Registry.register(
+            BuiltInRegistries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID,"steel_nether_ignot"),
+            new Item(new Properties())
+    );
 
     public static void registerModItems() {
         NarylrMod.LOGGER.info("注册物品");
