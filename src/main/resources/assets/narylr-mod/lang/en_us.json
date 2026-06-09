@@ -28,6 +28,9 @@
   "tooltip.narylr-mod.steel_armor.durable": "Durable: higher durability than diamond armors",
   "tooltip.narylr-mod.steel_material.hard": "Hard: increases attack damage when held in main hand",
   "tooltip.narylr-mod.steel_armor.rule": "Armor weight uses the higher value with main-hand weight",
+  "tooltip.narylr-mod.heavy_item.heavy": "Heavy: -%s%% movement speed when held in main hand",
+  "tooltip.narylr-mod.heavy_item.heavy_reduced": "Heavy: -%s%% movement speed after Lightweight (base %s%%)",
+  "tooltip.narylr-mod.heavy_item.lightweight_full": "Heavy: fully negated by Lightweight (base %s%%)",
 
   "block.narylr-mod.steel_block": "Steel Block",
   "block.narylr-mod.steel_furnace": "Steel Furnace",

@@ -28,6 +28,8 @@
   "tooltip.narylr-mod.steel_armor.durable": "坚韧：耐久高于钻石盔甲",
   "tooltip.narylr-mod.steel_material.hard": "坚硬：主手持有时攻击伤害提高",
   "tooltip.narylr-mod.steel_armor.rule": "钢甲沉重与主手沉重取较大值",
+  "tooltip.narylr-mod.heavy_item.heavy_reduced": "沉重：轻盈后主手移动速度降低 %s%%（原本 %s%%）",
+  "tooltip.narylr-mod.heavy_item.lightweight_full": "沉重：已被轻盈完全抵消（原本 %s%%）",
 
   "block.narylr-mod.steel_block": "钢块",
   "block.narylr-mod.steel_furnace": "钢熔炉",
