@@ -1,13 +1,19 @@
 package com.narylr.narylrmod.item;
 
 import com.narylr.narylrmod.NarylrMod;
+import com.narylr.narylrmod.enchantment.ModEnchantments;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 
 import java.util.function.Supplier;
 
@@ -41,11 +47,24 @@ public class ModItemGroup {
                         output.accept(ModItems.STEEL_NETHER_CHESTPLATE);
                         output.accept(ModItems.STEEL_NETHER_LEGGINGS);
                         output.accept(ModItems.STEEL_NETHER_BOOTS);
+
+                        itemDisplayParameters.holders()
+                                .lookup(Registries.ENCHANTMENT)
+                                .flatMap(enchantmentRegistry -> enchantmentRegistry.get(ModEnchantments.LIGHTWEIGHT))
+                                .ifPresent(lightweight -> {
+                                    output.accept(createEnchantedBook(lightweight, 1));
+                                    output.accept(createEnchantedBook(lightweight, 2));
+                                    output.accept(createEnchantedBook(lightweight, 3));
+                                });
                     })
                     .build()
     );
 
     public static void registerItemGroups() {
         NarylrMod.LOGGER.info("注册创造模式Tab栏");
+    }
+
+    private static ItemStack createEnchantedBook(Holder<Enchantment> enchantment, int level) {
+        return EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, level));
     }
 }
