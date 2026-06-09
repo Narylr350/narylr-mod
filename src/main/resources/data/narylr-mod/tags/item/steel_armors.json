@@ -4,6 +4,10 @@
     "narylr-mod:steel_helmet",
     "narylr-mod:steel_chestplate",
     "narylr-mod:steel_leggings",
-    "narylr-mod:steel_boots"
+    "narylr-mod:steel_boots",
+    "narylr-mod:steel_nether_helmet",
+    "narylr-mod:steel_nether_chestplate",
+    "narylr-mod:steel_nether_leggings",
+    "narylr-mod:steel_nether_boots"
   ]
 }
