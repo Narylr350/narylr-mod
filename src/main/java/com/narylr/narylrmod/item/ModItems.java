@@ -154,6 +154,46 @@ public class ModItems {
                     new Properties().durability(ArmorItem.Type.BOOTS.getDurability(37))
             )
     );
+    //下界合金钢头
+    public static final Item STEEL_NETHER_HELMET = Registry.register(
+            BuiltInRegistries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_nether_helmet"),
+            new ArmorItem(
+                    ModArmorMaterials.STEEL,
+                    ArmorItem.Type.HELMET,
+                    new Properties().durability(ArmorItem.Type.HELMET.getDurability(37))
+            )
+    );
+    //下界合金钢奈头
+    public static final Item STEEL_NETHER_CHESTPLATE = Registry.register(
+            BuiltInRegistries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_nether_chestplate"),
+            new ArmorItem(
+                    ModArmorMaterials.STEEL,
+                    ArmorItem.Type.CHESTPLATE,
+                    new Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(37))
+            )
+    );
+    //下界合金钢裤头
+    public static final Item STEEL_NETHER_LEGGINGS = Registry.register(
+            BuiltInRegistries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_nether_leggings"),
+            new ArmorItem(
+                    ModArmorMaterials.STEEL,
+                    ArmorItem.Type.LEGGINGS,
+                    new Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(37))
+            )
+    );
+    //下界合金钢鞋
+    public static final Item STEEL_NETHER_BOOTS = Registry.register(
+            BuiltInRegistries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_nether_boots"),
+            new ArmorItem(
+                    ModArmorMaterials.STEEL,
+                    ArmorItem.Type.BOOTS,
+                    new Properties().durability(ArmorItem.Type.BOOTS.getDurability(37))
+            )
+    );
     //下界合金钢剑
     public static final Item STEEL_NETHER_SWORD = Registry.register(
             BuiltInRegistries.ITEM,

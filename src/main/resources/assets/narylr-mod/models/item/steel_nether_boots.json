@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "narylr-mod:item/steel_nether_boots"
+  }
+}

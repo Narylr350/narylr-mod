@@ -40,8 +40,19 @@ public class ModItemGroup {
                             output.accept(ModItems.STEEL_CHESTPLATE);//钢胸甲
                             output.accept(ModItems.STEEL_LEGGINGS);//钢护腿
                             output.accept(ModItems.STEEL_BOOTS);//钢鞋子
+
+                            output.accept(ModItems.STEEL_NETHER_HELMET);//下界合金钢头盔
+                            output.accept(ModItems.STEEL_NETHER_CHESTPLATE);//钢胸甲
+                            output.accept(ModItems.STEEL_NETHER_LEGGINGS);//钢护腿
+                            output.accept(ModItems.STEEL_NETHER_BOOTS);//钢鞋子
+
                             output.accept(ModItems.STEEL_NETHER_SWORD);//下界合金钢剑
                             output.accept(ModItems.STEEL_NETHER_PICKAXE);//下界合金钢稿
+//                            output.accept(ModItems.STEEL_NETHER_PICKAXE);//下界合金钢镐
+//                            output.accept(ModItems.STEEL_NETHER_AXE);//下界合金钢斧
+//                            output.accept(ModItems.STEEL_NETHER_SHOVEL);//下界合金钢铲
+//                            output.accept(ModItems.STEEL_NETHER_HOE);//下界合金钢锄
+
                             output.accept(ModItems.STEEL_FRYING_PAN);//平底锅
                             output.accept(ModItems.STEEL_MORNING_STAR);//狼牙棒
 

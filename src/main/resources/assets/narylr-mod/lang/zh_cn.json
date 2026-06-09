@@ -17,6 +17,10 @@
   "item.narylr-mod.steel_morning_star": "钢狼牙棒",
   "item.narylr-mod.steel_nether_sword": "下界合金钢剑",
   "item.narylr-mod.steel_nether_pickaxe": "下界合金钢镐",
+  "item.narylr-mod.steel_nether_helmet": "下界合金钢头盔",
+  "item.narylr-mod.steel_nether_chestplate": "下界合金钢胸甲",
+  "item.narylr-mod.steel_nether_leggings": "下界合金钢护腿",
+  "item.narylr-mod.steel_nether_boots": "下界合金钢靴子",
 
   "tooltip.narylr-mod.steel_tool.heavy": "沉重：主手持有时移动速度降低",
   "tooltip.narylr-mod.steel_tool.durable": "坚韧：耐久高于钻石工具",
