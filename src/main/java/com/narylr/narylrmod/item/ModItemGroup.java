@@ -37,10 +37,21 @@ public class ModItemGroup {
                         output.accept(ModItems.STEEL_NETHER_PICKAXE);//下界合金钢稿
                         output.accept(ModItems.STEEL_FRYING_PAN);//平底锅
                         output.accept(ModItems.STEEL_MORNING_STAR);//狼牙棒
-                        output.accept(ModItems.STEEL_NETHER_HELMET);
+
+
+
+
+
+                        output.accept(ModItems.STEEL_NETHER_HELMET);//下界合金
                         output.accept(ModItems.STEEL_NETHER_CHESTPLATE);
                         output.accept(ModItems.STEEL_NETHER_LEGGINGS);
                         output.accept(ModItems.STEEL_NETHER_BOOTS);
+
+
+
+
+
+
                     })
                     .build()
     );
