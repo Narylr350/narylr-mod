@@ -22,10 +22,12 @@
   "item.narylr-mod.steel_nether_leggings": "Steel Nether Leggings",
   "item.narylr-mod.steel_nether_boots": "Steel Nether Boots",
 
-  "tooltip.narylr-mod.steel_tool.heavy": "Heavy: Slows movement when held in main hand",
-  "tooltip.narylr-mod.steel_tool.durable": "Durable: Higher durability than diamond tools",
-  "tooltip.narylr-mod.steel_ingot.heavy": "Heavy: Slows movement when held in main hand",
-  "tooltip.narylr-mod.steel_ingot.hard": "Hard: Increases attack damage when held in main hand",
+  "tooltip.narylr-mod.heavy_item.heavy": "Heavy: -%s%% movement speed when held in main hand",
+  "tooltip.narylr-mod.steel_armor.heavy": "Heavy: provides %s%% armor weight when worn",
+  "tooltip.narylr-mod.steel_tool.durable": "Durable: higher durability than diamond tools",
+  "tooltip.narylr-mod.steel_armor.durable": "Durable: higher durability than diamond armors",
+  "tooltip.narylr-mod.steel_material.hard": "Hard: increases attack damage when held in main hand",
+  "tooltip.narylr-mod.steel_armor.rule": "Armor weight uses the higher value with main-hand weight",
 
   "block.narylr-mod.steel_block": "Steel Block",
   "block.narylr-mod.steel_furnace": "Steel Furnace",

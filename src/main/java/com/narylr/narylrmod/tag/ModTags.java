@@ -17,4 +17,9 @@ public class ModTags {
             Registries.ITEM,
             ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_tools")
     );
+    // 钢制盔甲
+    public static final TagKey<Item> STEEL_ARMORS = TagKey.create(
+            Registries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_armors")
+    );
 }

@@ -64,18 +64,13 @@ public record SteelFurnaceRecipe(
 
     public static class Serializer implements RecipeSerializer<SteelFurnaceRecipe> {
         public static final MapCodec<SteelFurnaceRecipe> CODEC = RecordCodecBuilder.mapCodec(
-                new Function<RecordCodecBuilder.Instance<SteelFurnaceRecipe>, App<RecordCodecBuilder.Mu<SteelFurnaceRecipe>, SteelFurnaceRecipe>>() {
-                    @Override
-                    public App<RecordCodecBuilder.Mu<SteelFurnaceRecipe>, SteelFurnaceRecipe> apply(RecordCodecBuilder.Instance<SteelFurnaceRecipe> instance) {
-                        return instance.group(
-                                        Ingredient.CODEC.fieldOf("ingredient").forGetter(SteelFurnaceRecipe::ingredient),
-                                        Codec.INT.fieldOf("coal_count").forGetter(SteelFurnaceRecipe::coalCount),
-                                        ItemStack.CODEC.fieldOf("result").forGetter(SteelFurnaceRecipe::result),
-                                        Codec.FLOAT.optionalFieldOf("experience", 0.0F).forGetter(SteelFurnaceRecipe::experience),
-                                        Codec.INT.fieldOf("cookingtime").forGetter(SteelFurnaceRecipe::cookingTime)
-                        ).apply(instance, SteelFurnaceRecipe::new);
-                    }
-                }
+                instance -> instance.group(
+                                Ingredient.CODEC.fieldOf("ingredient").forGetter(SteelFurnaceRecipe::ingredient),
+                                Codec.INT.fieldOf("coal_count").forGetter(SteelFurnaceRecipe::coalCount),
+                                ItemStack.CODEC.fieldOf("result").forGetter(SteelFurnaceRecipe::result),
+                                Codec.FLOAT.optionalFieldOf("experience", 0.0F).forGetter(SteelFurnaceRecipe::experience),
+                                Codec.INT.fieldOf("cookingtime").forGetter(SteelFurnaceRecipe::cookingTime)
+                ).apply(instance, SteelFurnaceRecipe::new)
         );
 
         public static final StreamCodec<RegistryFriendlyByteBuf, SteelFurnaceRecipe> STREAM_CODEC = StreamCodec.composite(

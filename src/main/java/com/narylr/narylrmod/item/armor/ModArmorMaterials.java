@@ -29,4 +29,20 @@ public class ModArmorMaterials {
             1.5F,
             0.0F
     ));
+    // 下界合金钢盔甲材料，比普通钢甲更偏防御
+    public static final Holder<ArmorMaterial> STEEL_NETHER = Holder.direct(new ArmorMaterial(
+            Map.of(
+                    ArmorItem.Type.BOOTS, 4,
+                    ArmorItem.Type.LEGGINGS, 7,
+                    ArmorItem.Type.CHESTPLATE, 9,
+                    ArmorItem.Type.HELMET, 4,
+                    ArmorItem.Type.BODY, 12
+            ),
+            8,
+            SoundEvents.ARMOR_EQUIP_IRON,
+            () -> Ingredient.of(ModItems.STEEL_NETHER_INGOT),
+            List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "STEEL_NETHER"))),
+            2.0F,
+            0.0F
+    ));
 }
