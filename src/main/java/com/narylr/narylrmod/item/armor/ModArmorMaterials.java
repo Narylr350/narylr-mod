@@ -41,7 +41,7 @@ public class ModArmorMaterials {
             8,
             SoundEvents.ARMOR_EQUIP_IRON,
             () -> Ingredient.of(ModItems.STEEL_NETHER_INGOT),
-            List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "STEEL_NETHER"))),
+            List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_nether"))),
             2.0F,
             0.0F
     ));

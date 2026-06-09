@@ -158,7 +158,7 @@ public class ModItems {
             BuiltInRegistries.ITEM,
             ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_nether_helmet"),
             new ArmorItem(
-                    ModArmorMaterials.STEEL,
+                    ModArmorMaterials.STEEL_NETHER,
                     ArmorItem.Type.HELMET,
                     new Properties().durability(ArmorItem.Type.HELMET.getDurability(37))
             )
@@ -168,7 +168,7 @@ public class ModItems {
             BuiltInRegistries.ITEM,
             ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_nether_chestplate"),
             new ArmorItem(
-                    ModArmorMaterials.STEEL,
+                    ModArmorMaterials.STEEL_NETHER,
                     ArmorItem.Type.CHESTPLATE,
                     new Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(37))
             )
@@ -178,7 +178,7 @@ public class ModItems {
             BuiltInRegistries.ITEM,
             ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_nether_leggings"),
             new ArmorItem(
-                    ModArmorMaterials.STEEL,
+                    ModArmorMaterials.STEEL_NETHER,
                     ArmorItem.Type.LEGGINGS,
                     new Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(37))
             )
@@ -188,7 +188,7 @@ public class ModItems {
             BuiltInRegistries.ITEM,
             ResourceLocation.fromNamespaceAndPath(NarylrMod.MOD_ID, "steel_nether_boots"),
             new ArmorItem(
-                    ModArmorMaterials.STEEL,
+                    ModArmorMaterials.STEEL_NETHER,
                     ArmorItem.Type.BOOTS,
                     new Properties().durability(ArmorItem.Type.BOOTS.getDurability(37))
             )
